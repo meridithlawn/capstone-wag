@@ -1,8 +1,8 @@
-"""models and routes
+"""models and relationships
 
-Revision ID: 98751eae7ef0
+Revision ID: 573fc0b4f1da
 Revises: 
-Create Date: 2023-07-07 14:44:56.493708
+Create Date: 2023-07-07 16:18:20.048346
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '98751eae7ef0'
+revision = '573fc0b4f1da'
 down_revision = None
 branch_labels = None
 depends_on = None
