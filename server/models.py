@@ -27,6 +27,10 @@ class User(db.Model, SerializerMixin):
         secondaryjoin=('User.id == interactions.c.receiver_id'),
         viewonly=True)
     
+    def get_user_interactions(self):
+        dog_house = [intr.sent_interactions for intr in User.query.all()]
+        return dog_house
+    
     sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id")
     received_reports = db.relationship("Report", backref="receiver", foreign_keys="Report.receiver_id")
     reported_users = db.relationship('User', secondary='reports',
