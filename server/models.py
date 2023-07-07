@@ -22,10 +22,19 @@ class User(db.Model, SerializerMixin):
     # relationships
     sent_interactions = db.relationship("Interaction", backref="sender", foreign_keys="Interaction.sender_id")
     received_interactions = db.relationship("Interaction", backref="receiver", foreign_keys="Interaction.receiver_id")
-    # reports = db.relationship("Report", back_populates="user")
-    sent_reports
-    received_reports
+    interacted_users = db.relationship('User', secondary='interactions',
+        primaryjoin=('User.id == interactions.c.sender_id'),
+        secondaryjoin=('User.id == interactions.c.receiver_id'),
+        viewonly=True)
     
+    sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id")
+    received_reports = db.relationship("Report", backref="receiver", foreign_keys="Report.receiver_id")
+    reported_users = db.relationship('User', secondary='reports',
+        primaryjoin=('User.id == reports.c.sender_id'),
+        secondaryjoin=('User.id == reports.c.receiver_id'),
+        viewonly=True    
+    )
+
     handler = db.relationship("Handler", back_populates="users")
 
     def __repr__(self):
@@ -47,7 +56,6 @@ class Interaction(db.Model, SerializerMixin):
     # sender= db.relationship("User", back_populates="sent_interactions")
     # receiver= db.relationship("User", back_populates="received_interactions")
     
-
     def __repr__(self):
         return f"Relation #{self.id}: {self.sender_id}, {self.receiver_id}, {self.relation_cat}"
 
@@ -55,8 +63,8 @@ class Report(db.Model, SerializerMixin):
     __tablename__= 'reports'
 
     id=db.Column(db.Integer, primary_key=True)
-    reporter_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    reportee_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     concern = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     incident_datetime = db.Column(db.DateTime)
@@ -64,11 +72,9 @@ class Report(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     # relationships bleow lines should not be necessary because use backref in user
-    # reporter = db.relationship("User", back_populates="reports")
-    # reportee = db.relationship("User", back_populates="reports")
 
     def __repr__(self):
-        return f"Report #{self.id}, {self.reporter_id}, {self.reportee_id}, {self.concern}"
+        return f"Report #{self.id}, {self.sender_id}, {self.receiver_id}, {self.concern}"
 
 class Handler(db.Model, SerializerMixin):
     __tablename__='handlers'
