@@ -26,7 +26,7 @@ if __name__ == '__main__':
         user1 = User(username="Lucas", breed = "cocker", age = 7, weight = 25, fixed =True, handler_id=1)
         user2 = User(username="Lucas2", breed = "cocker", age = 7, weight = 25, fixed =True, handler_id=2)
 
-        report1= Report(reporter_id = 1, reportee_id= 2, concern = "asdf", description= "asdf")
+        report1= Report(sender_id = 1, receiver_id= 2, concern = "asdf", description= "asdf")
         interaction1= Interaction(sender_id = 1, receiver_id= 2, relation_cat= 1)
 
         db.session.add_all([handler1, handler2, user1, user2, report1, interaction1])

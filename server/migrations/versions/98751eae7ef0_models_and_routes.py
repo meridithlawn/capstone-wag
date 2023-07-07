@@ -1,8 +1,8 @@
-"""please work
+"""models and routes
 
-Revision ID: c2aab8ed9b50
+Revision ID: 98751eae7ef0
 Revises: 
-Create Date: 2023-07-07 11:42:41.436316
+Create Date: 2023-07-07 14:44:56.493708
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c2aab8ed9b50'
+revision = '98751eae7ef0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,7 +39,7 @@ def upgrade():
     sa.Column('fixed', sa.Boolean(), nullable=False),
     sa.Column('profile_pic', sa.String(), nullable=True),
     sa.Column('bio', sa.String(), nullable=True),
-    sa.Column('handler_id', sa.Integer(), nullable=True),
+    sa.Column('handler_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['handler_id'], ['handlers.id'], name=op.f('fk_users_handler_id_handlers')),
@@ -59,15 +59,15 @@ def upgrade():
     )
     op.create_table('reports',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('reporter_id', sa.Integer(), nullable=False),
-    sa.Column('reportee_id', sa.Integer(), nullable=False),
+    sa.Column('sender_id', sa.Integer(), nullable=False),
+    sa.Column('receiver_id', sa.Integer(), nullable=False),
     sa.Column('concern', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
     sa.Column('incident_datetime', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['reportee_id'], ['users.id'], name=op.f('fk_reports_reportee_id_users')),
-    sa.ForeignKeyConstraint(['reporter_id'], ['users.id'], name=op.f('fk_reports_reporter_id_users')),
+    sa.ForeignKeyConstraint(['receiver_id'], ['users.id'], name=op.f('fk_reports_receiver_id_users')),
+    sa.ForeignKeyConstraint(['sender_id'], ['users.id'], name=op.f('fk_reports_sender_id_users')),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
