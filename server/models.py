@@ -97,6 +97,8 @@ class Report(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     # relationships should not be necessary because use backref in user
+    # serialize
+    serialize_only=('id', 'sender_id.id', 'receiver_id.id', 'concern', 'description', 'incident_datetime')
 
     def __repr__(self):
         return f"Report #{self.id}, {self.sender_id}, {self.receiver_id}, {self.concern}"
@@ -115,20 +117,10 @@ class Handler(db.Model, SerializerMixin):
     # relationships
     users = db.relationship("User", back_populates="handler")
 
+    # serialize
+    serialize_only=('id', 'first_name', 'last_name', 'email', 'phone', '-users')
 
-# user
-# validations
-# username
-# age
-# weight
 
-# report
-
-# handler
-# first_name
-# last_name
-# email
-# phone
 
     def __repr__(self):
         return f"Handler #{self.id}: {self.first_name}, {self.last_name}"
