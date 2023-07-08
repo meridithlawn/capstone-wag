@@ -40,17 +40,23 @@ class User(db.Model, SerializerMixin):
         dog_house = [intr for intr in self.get_user_interactions() if intr.relation_cat == -1]
         return dog_house
     
-    # reports I sent
+    # returns the reports I sent
     sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id")
-    # reports I received
+    # returns the reports I received
     received_reports = db.relationship("Report", backref="receiver", foreign_keys="Report.receiver_id")
-    # users I reported
-    reported_users = db.relationship('User', secondary='reports',
+    # returns the users I reported
+    users_i_reported = db.relationship('User', secondary='reports',
         primaryjoin=('User.id == reports.c.sender_id'),
         secondaryjoin=('User.id == reports.c.receiver_id'),
         viewonly=True    
     )
-
+    # returns the users who reported me
+    users_reported_me = db.relationship('User', secondary='reports',
+        primaryjoin=('User.id == reports.c.receiver_id'),
+        secondaryjoin= ('User.id == reports.c.sender_id'),
+        viewonly=True
+    )
+    
     handler = db.relationship("Handler", back_populates="users")
 
     def __repr__(self):
