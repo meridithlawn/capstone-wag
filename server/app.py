@@ -108,25 +108,25 @@ class UserById(Resource):
             return make_response(user_by_id.to_dict(), 200)
         return make_response(({"error": "404: User with that ID not found"}), 404)
     
-    def delete(self, id):
-        try:
-            user = db.session.get(User, id)
-            db.session.delete(user)
-            db.session.commit()
-            return make_response(({}), 204)
-        except Exception as e:
-            return make_response(({"error": "404: User not found"}), 404)
+    # def delete(self, id):
+    #     try:
+    #         user = db.session.get(User, id)
+    #         db.session.delete(user)
+    #         db.session.commit()
+    #         return make_response(({}), 204)
+    #     except Exception as e:
+    #         return make_response(({"error": "404: User not found"}), 404)
         
-    def patch(self, id):
-        try:
-            data = request.get_json()
-            user = db.session.get(User, id)
-            for k, v in data.items():
-                setattr(user, k, v)
-            db.session.commit()
-            return make_response((user.to_dict()), 200)
-        except Exception as e:
-            return make_response(({"error": str(e)}),400)    
+    # def patch(self, id):
+    #     try:
+    #         data = request.get_json()
+    #         user = db.session.get(User, id)
+    #         for k, v in data.items():
+    #             setattr(user, k, v)
+    #         db.session.commit()
+    #         return make_response((user.to_dict()), 200)
+    #     except Exception as e:
+    #         return make_response(({"error": str(e)}),400)    
         
 api.add_resource(UserById, "/users/<int:id>")
 
@@ -154,27 +154,27 @@ class HandlerByID(Resource):
             return make_response(handler_by_id.to_dict(), 200)
         return make_response(({"error": "404: Handler with that ID not found"}), 404)
     
-    def patch(self, id):
-        try:
-            data = request.get_json()
-            handler = db.session.get(Handler, id)
-            for k, v in data.items():
-                setattr(handler, k, v)
-            db.session.commit()
-            return make_response((handler.to_dict()), 200)
-        except Exception as e:
-            return make_response(({"error": str(e)}),400)    
+    # def patch(self, id):
+    #     try:
+    #         data = request.get_json()
+    #         handler = db.session.get(Handler, id)
+    #         for k, v in data.items():
+    #             setattr(handler, k, v)
+    #         db.session.commit()
+    #         return make_response((handler.to_dict()), 200)
+    #     except Exception as e:
+    #         return make_response(({"error": str(e)}),400)    
     
-    def delete(self, id):
-        try:
-            handler = db.session.get(Handler, id)
-            db.session.delete(handler)
-            db.session.commit()
-            return make_response(({}), 204)
-        except Exception as e:
-            return make_response(({"error": "404: User not found"}), 404)
+#     def delete(self, id):
+#         try:
+#             handler = db.session.get(Handler, id)
+#             db.session.delete(handler)
+#             db.session.commit()
+#             return make_response(({}), 204)
+#         except Exception as e:
+#             return make_response(({"error": "404: User not found"}), 404)
 
-api.add_resource(Handlers, "/handlers/<int:id>")
+api.add_resource(HandlerByID, "/handlers/<int:id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
