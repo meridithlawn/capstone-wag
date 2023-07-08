@@ -9,6 +9,7 @@ class User(db.Model, SerializerMixin):
 
     id=db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
+    # _password_hash = db.Column(db.String)
     breed=db.Column(db.String, nullable=False)
     age= db.Column(db.Integer, nullable=False)
     weight= db.Column(db.Integer, nullable=False)
@@ -59,6 +60,8 @@ class User(db.Model, SerializerMixin):
     
     handler = db.relationship("Handler", back_populates="users")
 
+    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id')
+    serialize_rules = ('-handler.id', '-sent_interactions', '-received_interactions', '-users_i_reacted_to', '-users_reacted_to_me' '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
     def __repr__(self):
         return f"User #{self.id}: {self.username}, {self.breed}"
     
@@ -112,5 +115,24 @@ class Handler(db.Model, SerializerMixin):
     # relationships
     users = db.relationship("User", back_populates="handler")
 
+
+# user
+# validations
+# username
+# age
+# weight
+
+# report
+
+# handler
+# first_name
+# last_name
+# email
+# phone
+
     def __repr__(self):
         return f"Handler #{self.id}: {self.first_name}, {self.last_name}"
+    
+    
+
+    # to-do: validations, add password to user, serialize
