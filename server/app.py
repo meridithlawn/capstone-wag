@@ -130,6 +130,51 @@ class UserById(Resource):
         
 api.add_resource(UserById, "/users/<int:id>")
 
+class Reports(Resource):
+    def get(self):
+        all_reports =[r.to_dict() for r in Report.query.all()]
+        if all_reports:
+            return make_response(all_reports, 200)
+        return make_response("no users found, 404")
+api.add_resource(Reports, "/reports")
+
+
+class Handlers(Resource):
+    def get(self):
+        all_handlers = [h.to_dict() for h in Handler.query.all()]
+        if all_handlers:
+            return make_response(all_handlers, 200)
+        return make_response("no handlers found, 404")
+api.add_resource(Handlers, "/handlers")
+
+class HandlerByID(Resource):
+    def get(self, id):
+        handler_by_id = db.session.get(Handler, id)
+        if handler_by_id:
+            return make_response(handler_by_id.to_dict(), 200)
+        return make_response(({"error": "404: Handler with that ID not found"}), 404)
+    
+    def patch(self, id):
+        try:
+            data = request.get_json()
+            handler = db.session.get(Handler, id)
+            for k, v in data.items():
+                setattr(handler, k, v)
+            db.session.commit()
+            return make_response((handler.to_dict()), 200)
+        except Exception as e:
+            return make_response(({"error": str(e)}),400)    
+    
+    def delete(self, id):
+        try:
+            handler = db.session.get(Handler, id)
+            db.session.delete(handler)
+            db.session.commit()
+            return make_response(({}), 204)
+        except Exception as e:
+            return make_response(({"error": "404: User not found"}), 404)
+
+api.add_resource(Handlers, "/handlers/<int:id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
