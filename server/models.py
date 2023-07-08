@@ -19,20 +19,32 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    # relationships
+    # relationships build similar for reports, excluding the positive and negative
     sent_interactions = db.relationship("Interaction", backref="sender", foreign_keys="Interaction.sender_id")
     received_interactions = db.relationship("Interaction", backref="receiver", foreign_keys="Interaction.receiver_id")
-    interacted_users = db.relationship('User', secondary='interactions',
+    # users who I reacted to
+    users_i_reacted_to = db.relationship('User', secondary='interactions',
         primaryjoin=('User.id == interactions.c.sender_id'),
         secondaryjoin=('User.id == interactions.c.receiver_id'),
         viewonly=True)
-    
+    # gives users who reacted to me
+    users_reacted_to_me= db.relationship('User', secondary='interactions',
+        primaryjoin=('User.id == interactions.c.receiver_id'),
+        secondaryjoin=('User.id == interactions.c.sender_id'),
+        viewonly=True)
+    #  returns all interactions of this user
     def get_user_interactions(self):
-        dog_house = [intr.sent_interactions for intr in User.query.all()]
+        return self.sent_interactions + self.received_interactions
+    # returns all neg interaction
+    def get_neg_interactions(self):
+        dog_house = [intr for intr in self.get_user_interactions() if intr.relation_cat == -1]
         return dog_house
     
+    # reports I sent
     sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id")
+    # reports I received
     received_reports = db.relationship("Report", backref="receiver", foreign_keys="Report.receiver_id")
+    # users I reported
     reported_users = db.relationship('User', secondary='reports',
         primaryjoin=('User.id == reports.c.sender_id'),
         secondaryjoin=('User.id == reports.c.receiver_id'),
@@ -75,7 +87,7 @@ class Report(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    # relationships bleow lines should not be necessary because use backref in user
+    # relationships should not be necessary because use backref in user
 
     def __repr__(self):
         return f"Report #{self.id}, {self.sender_id}, {self.receiver_id}, {self.concern}"
