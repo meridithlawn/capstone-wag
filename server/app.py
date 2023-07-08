@@ -68,10 +68,10 @@ def signup():
 class SignIn(Resource):
     def post(self):
 
-        email = request.get_json()["email"]
+        username = request.get_json()["username"]
         password = request.get_json()["password"]
 
-        user = User.query.filter(User.email == email).first()
+        user = User.query.filter(User.username == username).first()
 
         if user:
             # import ipdb; ipdb.set_trace()
@@ -94,9 +94,9 @@ api.add_resource(SignOut, "/signout")
 class Users(Resource):
 
     def get(self):
-        users =[u.to_dict() for u in User.query.all()]
-        if users:
-            return make_response(users, 200)
+        all_users =[u.to_dict() for u in User.query.all()]
+        if all_users:
+            return make_response(all_users, 200)
         return make_response("no users found, 404")
     
 api.add_resource(Users, "/users")
