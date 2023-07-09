@@ -9,19 +9,28 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from flask_bcrypt import Bcrypt
 # Local imports
-from config import app, db, api
+from config import app, db, api, bcrypt
 from models import User, Interaction, Handler, Report
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
     "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
 
-app = Flask(__name__)
+# app = Flask(__name__)
+# bcrypt = Bcrypt(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = "SuperSecretKey"
 app.json.compact = False
+
+# set up: generate a secret key run in terminal: python -c 'import os; print(os.urandom(16))'
+# copy and paste terminal response in place of "SuperSecretKey"
+# app.secret_key= exactly what terminal says, not inside of quotes
+app.secret_key = "SuperSecretKey"
+
+
 
 # Define metadata
 metadata = MetaData(naming_convention={
@@ -32,7 +41,7 @@ migrate = Migrate(app, db)
 
 # Instantiate REST API
 api=Api(app, prefix="/api/v1")
-db.init_app(app)
+# db.init_app(app)
 
 # Instantiate CORS
 CORS(app)
@@ -43,8 +52,8 @@ CORS(app)
 def index():
     return '<h1>Wag</h1>'
 
-@app.route("/api/v1/check-user", methods=["GET"])
-def check_user():
+@app.route("/api/v1/authorized", methods=["GET"])
+def authorized():
     if id := session.get("user_id"):
         if user := db.session.get(User, id):
             return make_response(user.to_dict(), 200)
@@ -85,8 +94,7 @@ api.add_resource(SignIn, "/signin")
 class SignOut(Resource):
     def delete(self):
         
-        session["user_id"] = None
-                
+        session["user_id"] = None      
         return make_response({}, 204)
         
 api.add_resource(SignOut, "/signout")
@@ -154,16 +162,16 @@ class HandlerByID(Resource):
             return make_response(handler_by_id.to_dict(), 200)
         return make_response(({"error": "404: Handler with that ID not found"}), 404)
     
-    # def patch(self, id):
-    #     try:
-    #         data = request.get_json()
-    #         handler = db.session.get(Handler, id)
-    #         for k, v in data.items():
-    #             setattr(handler, k, v)
-    #         db.session.commit()
-    #         return make_response((handler.to_dict()), 200)
-    #     except Exception as e:
-    #         return make_response(({"error": str(e)}),400)    
+    def patch(self, id):
+        try:
+            data = request.get_json()
+            handler = db.session.get(Handler, id)
+            for key, value in data.items():
+                setattr(handler, key, value)
+            db.session.commit()
+            return make_response((handler.to_dict()), 200)
+        except Exception as e:
+            return make_response(({"error": str(e)}),400)    
     
 #     def delete(self, id):
 #         try:
