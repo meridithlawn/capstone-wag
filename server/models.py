@@ -145,4 +145,4 @@ class Handler(db.Model, SerializerMixin):
     
     
 
-    # to-do: validations, add password to user, serialize
+    # to-do: validations, polish up serialize rules
