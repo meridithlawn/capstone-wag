@@ -72,26 +72,36 @@ def signup():
 
         db.session.add(new_user)
         db.session.commit()
-        
+
         session["user_id"] = new_user.id
         return make_response(new_user.to_dict(), 201)
     except Exception as e:
         return make_response({"error": str(e) }, 400)
 
+# class SignIn(Resource):
+#     def post(self):
+        # previous version before auth and bcrypt
+        # username = request.get_json()["username"]
+        # password = request.get_json()["password"]
+
+        # user = User.query.filter(User.username == username).first()
+
+        # if user:
+        #     # import ipdb; ipdb.set_trace()
+        #     if user.password == password:
+        #         session["user_id"] = user.id
+        #         return user.to_dict(), 200
+        # return make_response({"error": "Unauthorized"}, 401)
+
 class SignIn(Resource):
     def post(self):
-
-        username = request.get_json()["username"]
-        password = request.get_json()["password"]
-
-        user = User.query.filter(User.username == username).first()
-
-        if user:
-            # import ipdb; ipdb.set_trace()
-            if user.password == password:
-                session["user_id"] = user.id
-                return user.to_dict(), 200
-        return make_response({"error": "Unauthorized"}, 401)
+        try:
+            user = User.query.filter_by(username=request.get_json()['username']).first()
+            if user.authenticate(request.get_json()['password']):
+                session['user.id'] = user.id
+                return make_response(user.to_dict(),200)
+        except Exception as e:
+            return make_response(401, "Incorrect username or password")
     
 api.add_resource(SignIn, "/signin")
 
