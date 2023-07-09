@@ -145,4 +145,4 @@ class Handler(db.Model, SerializerMixin):
     
     
 
-    # to-do: validations, polish up serialize rules
+    # to-do: validations, polish up serialize rules and take hash password out
