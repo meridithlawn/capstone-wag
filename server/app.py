@@ -52,6 +52,7 @@ CORS(app)
 def index():
     return '<h1>Wag</h1>'
 
+# check authorized route with matteo to see if correct
 @app.route("/api/v1/authorized", methods=["GET"])
 def authorized():
     if id := session.get("user_id"):
@@ -59,6 +60,16 @@ def authorized():
             return make_response(user.to_dict(), 200)
     
     return make_response({"error": "Unauthorized"}, 401)
+
+# from ix lecture 
+# class AuthorizedSession(Resource):
+#     def get(self):
+#         try:
+#             user = User.query.filter_by(id = session['user_id']).first()
+#             return make_response(user.to_dict(), 200)
+#         except Exception as error:
+#             return make_response(401, "Unauthorized")
+# api.add_resource(AuthorizedSession, '/authorized')
 
 
 
