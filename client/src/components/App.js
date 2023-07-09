@@ -14,11 +14,15 @@ const handleToggleForm = () => {
 
 const handleSignoutClick= () => {
   fetch("/api/v1/signout", {method: "DELETE"})
-    .then(() => {
-    setCurrentUser(null); 
-    
-  }, );
-}
+    .then(res => {
+      if(res.ok) {
+        setCurrentUser(null);
+        // history.push('/authentication') the ix version
+        // following line goes to authentication route, check where I want to redirect to
+        history.push('/authentication')
+      } 
+    })
+  }
 
 if (!currentDriver) {
   return (
