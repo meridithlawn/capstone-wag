@@ -67,8 +67,12 @@ def signup():
     try:
         data = request.get_json()
         new_user = User(**data)
+        # hashes our password and saves it to _password_hash column
+        new_user.password_hash = data['password']
+
         db.session.add(new_user)
         db.session.commit()
+        
         session["user_id"] = new_user.id
         return make_response(new_user.to_dict(), 201)
     except Exception as e:
