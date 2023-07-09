@@ -18,7 +18,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
     "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
 
-# app = Flask(__name__)
+# app = Flask(__name__) commented out for circular import already in config
 # bcrypt = Bcrypt(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -27,8 +27,8 @@ app.json.compact = False
 
 # set up: generate a secret key run in terminal: python -c 'import os; print(os.urandom(16))'
 # copy and paste terminal response in place of "SuperSecretKey"
-# app.secret_key= exactly what terminal says, not inside of quotes
-app.secret_key = "SuperSecretKey"
+app.secret_key= b'\xe8v\x15\x88\x8b\x92\x0fz\xcd\xe6\x97\x97x\xaa\x89p'
+# app.secret_key = "SuperSecretKey"
 
 
 
@@ -41,7 +41,7 @@ migrate = Migrate(app, db)
 
 # Instantiate REST API
 api=Api(app, prefix="/api/v1")
-# db.init_app(app)
+# db.init_app(app) commented out for circular import already in config
 
 # Instantiate CORS
 CORS(app)

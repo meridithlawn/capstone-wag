@@ -27,6 +27,8 @@ db.init_app(app)
 
 # Instantiate REST API
 api = Api(app)
+
+# instantiage bcrypt
 bcrypt = Bcrypt(app)
 
 # Instantiate CORS
