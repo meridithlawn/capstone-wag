@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
+import {useContext} from 'react'
 
+import { ProjectContext } from '../context/projectContext'
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm'
 import UserHome from './UserHome'
@@ -8,27 +10,20 @@ import UserHome from './UserHome'
 function App() {
 // Code goes here!
 
-const history = useHistory()
+//this holds all of the values from useContext in projectContext
+const context = useContext(ProjectContext)
+// if you don't want/need to use all of the values, you can destructure to just one ones you need in this component
+// const {projects} = useContext(ProjectContext) -> include whichever values you want to inherit in the curly braces to destructure
 
 const [showSignInForm, setShowSignInForm] = useState(false)
-const [currentUser, setCurrentUser] = useState(null)
+
 
 
 const handleToggleForm = () => {
   setShowSignInForm(currentVal => !currentVal);
 };
 
-const handleSignoutClick= () => {
-  fetch("/api/v1/signout", {method: "DELETE"})
-    .then(res => {
-      if(res.ok) {
-        setCurrentUser(null);
-        // history.push('/authentication') the ix version
-        // following line goes to authentication route, check where I want to redirect to
-        history.push('/authentication')
-      } 
-    })
-  }
+
 
 if (!currentUser) {
   return (
