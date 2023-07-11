@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
+
+import SignInForm from './SignInForm'
+import SignUpForm from './SignUpForm'
+import UserHome from './UserHome'
 
 function App() {
 // Code goes here!
 
-const [showLoginForm, setShowLoginForm] = useState(false)
+const history = useHistory()
+
+const [showSignInForm, setShowSignInForm] = useState(false)
 const [currentUser, setCurrentUser] = useState(null)
 
 
 const handleToggleForm = () => {
-  setShowLoginForm(currentVal => !currentVal);
+  setShowSignInForm(currentVal => !currentVal);
 };
 
 const handleSignoutClick= () => {
@@ -24,14 +30,14 @@ const handleSignoutClick= () => {
     })
   }
 
-if (!currentDriver) {
+if (!currentUser) {
   return (
     <>
     <header> WAG </header>
     <navbar>
-      {!showLoginForm ? <LoginForm/> : <NewUserForm  handleToggleForm={handleToggleForm}/>}
+      {!showSignInForm ? <SignInForm/> : <SignUpForm  handleToggleForm={handleToggleForm}/>}
     </navbar>
-    <img src="https://wallpapercave.com/wp/wp7611213.jpg" alt="!"/>
+    <img src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg" alt="!"/>
     </>
     )
   }  
@@ -39,7 +45,7 @@ if (!currentDriver) {
     <div>
       <Switch>
         <Route path = '/home'>
-          <UserCollection handleSignoutClick={handleSignoutClick}/>
+          <UserHome handleSignoutClick={handleSignoutClick}/>
         </Route>
         {/* <Route exact path = '/'> 
           <DriverProfile currentDriver={currentDriver} handleSignoutClick={handleSignoutClick} saveDriver={saveDriver} saveNewCar={saveNewCar} setCars={setCars} saveNewDrive={saveNewDrive} addDriveToUser={addDriveToUser}/>
