@@ -14,7 +14,7 @@ function App() {
 const context = useContext(ProjectContext)
 // if you don't want/need to use all of the values, you can destructure to just one ones you need in this component
 // const {projects} = useContext(ProjectContext) -> include whichever values you want to inherit in the curly braces to destructure
-
+const [currentUser, setCurrentUser] = useState(false)
 const [showSignInForm, setShowSignInForm] = useState(false)
 
 
@@ -23,6 +23,9 @@ const handleToggleForm = () => {
   setShowSignInForm(currentVal => !currentVal);
 };
 
+const saveUser = (new_user) => {
+  setCurrentUser(new_user)
+}
 
 
 if (!currentUser) {
@@ -30,8 +33,9 @@ if (!currentUser) {
     <>
     <header> WAG </header>
     <navbar>
-      {!showSignInForm ? <SignInForm/> : <SignUpForm  handleToggleForm={handleToggleForm}/>}
-    </navbar>
+      {!showSignInForm ? <SignInForm saveUser={saveUser} handleToggleForm={handleToggleForm}/> : <SignUpForm saveUser={saveUser} handleToggleForm={handleToggleForm}/>}
+  
+   </navbar>
     <img src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg" alt="!"/>
     </>
     )
@@ -40,7 +44,7 @@ if (!currentUser) {
     <div>
       <Switch>
         <Route path = '/home'>
-          <UserHome handleSignoutClick={handleSignoutClick}/>
+          <UserHome/>
         </Route>
         {/* <Route exact path = '/'> 
           <DriverProfile currentDriver={currentDriver} handleSignoutClick={handleSignoutClick} saveDriver={saveDriver} saveNewCar={saveNewCar} setCars={setCars} saveNewDrive={saveNewDrive} addDriveToUser={addDriveToUser}/>
