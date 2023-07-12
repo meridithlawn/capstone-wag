@@ -27,12 +27,15 @@ const saveUser = (new_user) => {
   setCurrentUser(new_user)
 }
 
-const handleSignoutClick= () => {
+const handleSignOutClick= () => {
   fetch("/api/v1/signout", {method: "DELETE"})
-    .then(() => {
-    setCurrentUser(null); 
+  
+    .then((resp) => {
+      if (resp.ok){
+      setCurrentUser(null); 
+      }
     
-  }, );
+  });
 }
 
 useEffect(() => {
@@ -60,7 +63,7 @@ if (!currentUser) {
     <div>
       <Switch>
         <Route path = '/home'>
-          <UserHome currentUser={currentUser} handleSignoutClick={handleSignoutClick}/>
+          <UserHome currentUser={currentUser} handleSignOutClick={handleSignOutClick}/>
         </Route>
         {/* <Route exact path = '/'> 
           <DriverProfile currentDriver={currentDriver} handleSignoutClick={handleSignoutClick} saveDriver={saveDriver} saveNewCar={saveNewCar} setCars={setCars} saveNewDrive={saveNewDrive} addDriveToUser={addDriveToUser}/>

@@ -78,17 +78,18 @@ def signup():
     try:
         user_data = request.get_json().get('user')
         handler_data = request.get_json().get('handler')
-        new_user = User(**user_data)
+        new_handler = Handler(**handler_data)
+
+        db.session.add(new_handler)
+        db.session.commit()
+        
+        new_user = User(username=user_data["username"], breed=user_data["breed"], age=user_data["age"], weight=user_data["weight"], fixed=user_data["fixed"], profile_pic=user_data["profile_pic"])
+        new_user.handler_id = new_handler.id
         # hashes our password and saves it to _password_hash column
         new_user.password_hash = user_data['password']
         db.session.add(new_user)
         db.session.commit()
 
-        new_handler = Handler(**handler_data)
-        new_user.handler = new_handler
-        db.session.add(new_handler)
-        db.session.commit()
-        
         session["user_id"] = new_user.id
         return make_response(new_user.to_dict(), 201)
     except Exception as e:

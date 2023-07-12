@@ -8,7 +8,7 @@ function UserHome({currentUser, handleSignOutClick}){
 return (
     <>
         <h1>user home page</h1>
-        <button onclick={handleSignOutClick}sign out></button>
+        <button onClick={handleSignOutClick}>sign out</button>
     </>
 )
 
