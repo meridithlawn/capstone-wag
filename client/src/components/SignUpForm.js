@@ -43,12 +43,14 @@ function SignUpForm ({saveUser, handleToggleForm}){
             // alert(JSON.stringify(values, null));
             console.log("im in fetch")
             const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic} = values
+            const fixedToBool = fixed.trim() === "yes" ? true : false
+
             fetch("/api/v1/signup", {
                 method:"POST",
                 headers: {
                     "Content-Type": "application/json",   
                 },
-                body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed, profile_pic}}),
+                body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed: fixedToBool, profile_pic}}),
             })
             .then((resp) => {
                 console.log("RESP", resp)
