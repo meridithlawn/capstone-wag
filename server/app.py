@@ -53,7 +53,7 @@ def index():
     return '<h1>Wag</h1>'
 
 # check authorized route with matteo to see if correct
-@app.route("/api/v1/authorized", methods=["GET"])
+@app.route("/api/v1/check-user", methods=["GET"])
 def authorized():
     if id := session.get("user_id"):
         if user := db.session.get(User, id):
