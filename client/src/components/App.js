@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
-import {useContext} from 'react'
+// import {useContext} from 'react'
 
-import { ProjectContext } from '../context/projectContext'
+// import { ProjectContext } from '../context/projectContext'
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm'
 import UserHome from './UserHome'
@@ -11,7 +11,7 @@ function App() {
 // Code goes here!
 
 //this holds all of the values from useContext in projectContext
-const context = useContext(ProjectContext)
+// const context = useContext(ProjectContext)
 // if you don't want/need to use all of the values, you can destructure to just one ones you need in this component
 // const {projects} = useContext(ProjectContext) -> include whichever values you want to inherit in the curly braces to destructure
 const [currentUser, setCurrentUser] = useState(false)
@@ -27,15 +27,31 @@ const saveUser = (new_user) => {
   setCurrentUser(new_user)
 }
 
+const handleSignoutClick= () => {
+  fetch("/api/v1/signout", {method: "DELETE"})
+    .then(() => {
+    setCurrentUser(null); 
+    
+  }, );
+}
+
+useEffect(() => {
+  fetch("/api/v1/check-user")
+  .then(response => {
+    if (response.ok){
+      response.json()
+      .then(saveUser)
+    }
+  })
+  }, [])
+
 
 if (!currentUser) {
   return (
     <>
-    <header> WAG </header>
-    <navbar>
+    <header>
       {!showSignInForm ? <SignInForm saveUser={saveUser} handleToggleForm={handleToggleForm}/> : <SignUpForm saveUser={saveUser} handleToggleForm={handleToggleForm}/>}
-  
-   </navbar>
+    </header>
     <img src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg" alt="!"/>
     </>
     )
@@ -44,7 +60,7 @@ if (!currentUser) {
     <div>
       <Switch>
         <Route path = '/home'>
-          <UserHome/>
+          <UserHome currentUser={currentUser} handleSignoutClick={handleSignoutClick}/>
         </Route>
         {/* <Route exact path = '/'> 
           <DriverProfile currentDriver={currentDriver} handleSignoutClick={handleSignoutClick} saveDriver={saveDriver} saveNewCar={saveNewCar} setCars={setCars} saveNewDrive={saveNewDrive} addDriveToUser={addDriveToUser}/>
