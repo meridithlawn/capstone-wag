@@ -44,6 +44,16 @@ class User(db.Model, SerializerMixin):
         dog_house = [intr for intr in self.get_user_interactions() if intr.relation_cat == -1]
         return dog_house
     
+    def get_users_w_pos_interactions(self):
+        friends = []
+        for intr in self.get_user_interactions():
+            if intr.relation_cat == 1:
+                if intr.sender == self:
+                    friends.append(intr.receiver.id)
+                else:
+                    friends.append(intr.sender.id)
+        return friends
+    
     # returns the reports I sent
     sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id")
     # returns the reports I received
@@ -63,7 +73,7 @@ class User(db.Model, SerializerMixin):
     
     handler = db.relationship("Handler", back_populates="users")
 
-    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id')
+    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions')
     serialize_rules = ('-handler.id', '-sent_interactions', '-received_interactions', '-users_i_reacted_to', '-users_reacted_to_me' '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
 
     @hybrid_property
