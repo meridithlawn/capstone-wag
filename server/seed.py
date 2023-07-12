@@ -35,6 +35,7 @@ if __name__ == '__main__':
         interaction1= Interaction(sender_id = 1, receiver_id= 2, relation_cat= 1)
         interaction2= Interaction(sender_id = 2, receiver_id= 1, relation_cat= 1)
         interaction3= Interaction(sender_id = 3, receiver_id= 2, relation_cat= -1)
+        
 
 
         db.session.add_all([handler1, handler2, handler3, user1, user2, user3, report1, report2,report3, interaction1, interaction2, interaction3])

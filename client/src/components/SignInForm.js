@@ -1,9 +1,12 @@
 
-import React from "react"
+import {useContext} from "react"
 import {useFormik} from "formik";
 import * as yup from "yup";
+import { UserContext } from "../context/userContext";
 
-function SignInForm({saveUser, handleToggleForm}) {
+function SignInForm({handleToggleForm}) {
+    const {handleSignInClick} = useContext(UserContext)
+
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -15,25 +18,26 @@ function SignInForm({saveUser, handleToggleForm}) {
             password: yup.string().required("Password is required"),
         }),
         onSubmit: values => {
-            fetch("/api/v1/signin",{
-                method:"POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values, null, 2),
-            }).then(resp => {
-            if (resp.ok) {
-                resp.json()
-                .then(user => {
-                    saveUser(user)  
-                })
-            } else {
-                resp.json()
-                .then(error => {
-                    alert("Incorrect username or password",error.error)
-                })
-            }
-            })
+            handleSignInClick(values)
+            // fetch("/api/v1/signin",{
+            //     method:"POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify(values, null, 2),
+            // }).then(resp => {
+            // if (resp.ok) {
+            //     resp.json()
+            //     .then(user => {
+            //         saveUser(user)  
+            //     })
+            // } else {
+            //     resp.json()
+            //     .then(error => {
+            //         alert("Incorrect username or password",error.error)
+            //     })
+            // }
+            // })
         },
     });
     return (

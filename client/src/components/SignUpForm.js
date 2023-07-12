@@ -1,13 +1,16 @@
 // import React, { useEffect, useState } from "react";
 // https://formik.org/docs/tutorial to see how to implement useContext with formik
-import {useState} from "react";
+import {useState, useContext} from "react";
+
 import {useFormik} from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import { UserContext } from '../context/userContext'
 
-function SignUpForm ({saveUser, handleToggleForm}){
+function SignUpForm ({handleToggleForm}){
     const history = useHistory()
     const [errors, setErrors] = useState([])
+    const {currentUser, handleSignUp} = useContext(UserContext)
 
     const userSchema = yup.object({
         first_name: yup.string().required("Please enter first name"),
@@ -42,32 +45,33 @@ function SignUpForm ({saveUser, handleToggleForm}){
         onSubmit: (values, {resetForm}) => {
             // alert(JSON.stringify(values, null));
             console.log("im in fetch")
-            const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic} = values
-            const fixedToBool = fixed.trim() === "yes" ? true : false
+            handleSignUp(values, resetForm, setErrors)
+            // const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic} = values
+            // const fixedToBool = fixed.trim() === "yes" ? true : false
 
-            fetch("/api/v1/signup", {
-                method:"POST",
-                headers: {
-                    "Content-Type": "application/json",   
-                },
-                body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed: fixedToBool, profile_pic}}),
-            })
-            .then((resp) => {
-                console.log("RESP", resp)
-                if (resp.ok) {
-                    resp.json()
-                    .then(data => {
-                        saveUser(data)
-                        resetForm({values: ""});
-                        history.push('/home')
-                    })
-                } else {
-                    resp.json()
-                    .then((error) => setErrors(error.message))
-                        // or use setErrors state to update error message
-                }
-            })
-                .catch((error) => console.log(error));
+            // fetch("/api/v1/signup", {
+            //     method:"POST",
+            //     headers: {
+            //         "Content-Type": "application/json",   
+            //     },
+            //     body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed: fixedToBool, profile_pic}}),
+            // })
+            // .then((resp) => {
+            //     console.log("RESP", resp)
+            //     if (resp.ok) {
+            //         resp.json()
+            //         .then(data => {
+            //             saveUser(data)
+            //             resetForm({values: ""});
+            //             history.push('/home')
+            //         })
+            //     } else {
+            //         resp.json()
+            //         .then((error) => setErrors(error.message))
+            //             // or use setErrors state to update error message
+            //     }
+            // })
+            //     .catch((error) => console.log(error));
             
         },
     });

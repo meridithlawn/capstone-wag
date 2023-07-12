@@ -115,7 +115,7 @@ class SignIn(Resource):
         try:
             user = User.query.filter_by(username=request.get_json()['username']).first()
             if user.authenticate(request.get_json()['password']):
-                session['user.id'] = user.id
+                session['user_id'] = user.id
                 return make_response(user.to_dict(),200)
         except Exception as e:
             return make_response(401, "Incorrect username or password")
