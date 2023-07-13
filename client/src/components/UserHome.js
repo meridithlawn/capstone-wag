@@ -22,8 +22,10 @@ function UserHome(){
     const mappedUsers = allUsers.map(user => <UserCard key={user.id} {...user}/>)
 
     const filteredUserCategoryNegOne = allUsers.filter(user => currentUser.get_neg_interactions.includes(user.id))
-        console.log(filteredUserCategoryNegOne)
-    // const user_category_zero =
+        console.log("foes", filteredUserCategoryNegOne)
+
+    const filteredUserCategoryPosOne = allUsers.filter(user => currentUser.get_users_w_pos_interactions.includes(user.id))
+        console.log("friends", filteredUserCategoryPosOne)
     // const user_category_pos_one = 
 
 
