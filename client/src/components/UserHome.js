@@ -17,10 +17,12 @@ function UserHome(){
         })
         }, []) 
     
-        console.log(allUsers)
+        console.log("all users,", allUsers)
+
     const mappedUsers = allUsers.map(user => <UserCard key={user.id} {...user}/>)
 
-    // const user_category_neg_one = allUsers.filter(user => self.sent_interactions.relation_cat == -1)
+    const filteredUserCategoryNegOne = allUsers.filter(user => currentUser.get_neg_interactions.includes(user.id))
+        console.log(filteredUserCategoryNegOne)
     // const user_category_zero =
     // const user_category_pos_one = 
 

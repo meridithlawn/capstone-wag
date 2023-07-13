@@ -41,8 +41,8 @@ class User(db.Model, SerializerMixin):
         return self.sent_interactions + self.received_interactions
     # returns all neg interaction
     def get_neg_interactions(self):
-        dog_house = [intr for intr in self.get_user_interactions() if intr.relation_cat == -1]
-        # dog_house = [intr.receiver_id for intr in self.sent_interactions if intr.relation_cat == -1]
+        # dog_house = [intr for intr in self.get_user_interactions() if intr.relation_cat == -1]
+        dog_house = [intr.receiver_id for intr in self.sent_interactions if intr.relation_cat == -1]
         return dog_house
     
     def get_users_w_pos_interactions(self):
@@ -76,7 +76,7 @@ class User(db.Model, SerializerMixin):
     
     handler = db.relationship("Handler", back_populates="users")
 
-    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions')
+    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions')
     serialize_rules = ('-handler.id', '-sent_interactions', '-received_interactions', '-users_i_reacted_to', '-users_reacted_to_me' '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
 
     @hybrid_property
