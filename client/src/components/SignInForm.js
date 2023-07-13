@@ -48,7 +48,9 @@ function SignInForm({handleToggleForm}) {
                 id="username"
                 name="username"
                 type="text"
+                placeholder="username"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 value={formik.values.username}
             />
             
@@ -58,6 +60,7 @@ function SignInForm({handleToggleForm}) {
                 name="password"
                 type="password"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 value={formik.values.password}
             />
             

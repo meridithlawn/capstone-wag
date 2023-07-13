@@ -7,12 +7,13 @@ import { UserProvider } from './context/userContext';
 // import "./index.css";
 
 ReactDOM.render(
-    // <UserProvider>
+    // <ErrorProvider>
         <UserProvider>
             <Router>
                 <App />
             </Router>
-        </UserProvider>,
-    document.getElementById('root')
+        </UserProvider>
+    // </ErrorProvider>
+    ,document.getElementById('root')
 
 );
