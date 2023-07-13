@@ -66,12 +66,6 @@ if (!currentUser) {
         <Route path = '/home'>
           <UserHome />
         </Route>
-        {/* <Route exact path = '/'> 
-          <DriverProfile currentDriver={currentDriver} handleSignoutClick={handleSignoutClick} saveDriver={saveDriver} saveNewCar={saveNewCar} setCars={setCars} saveNewDrive={saveNewDrive} addDriveToUser={addDriveToUser}/>
-        </Route>
-        <Route path="/cars">
-          <CarCollection cars={cars} setCars={setCars} currentDriver={currentDriver}handleSignoutClick={handleSignoutClick}/>
-        </Route>  */}
       </Switch>
     </div>
   );

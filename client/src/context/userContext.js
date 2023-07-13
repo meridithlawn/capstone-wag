@@ -38,12 +38,12 @@ const UserProvider = ({children}) => {
     useEffect(() => {
         fetch("/api/v1/check-user")
         .then(response => {
-          if (response.ok){
+          if (response.ok) {
             response.json()
             .then(saveUser)
           }
         })
-        }, [])
+    }, [])
 
     // const handleFetchTraditional = () => {
     // fetch('/api/v1/users')
