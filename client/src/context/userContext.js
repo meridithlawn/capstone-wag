@@ -110,6 +110,7 @@ const UserProvider = ({children}) => {
         }
         })
     }
+    
     const handleSignOutClick= () => {
         fetch("/api/v1/signout", {method: "DELETE"})
         
@@ -117,9 +118,9 @@ const UserProvider = ({children}) => {
             if (resp.ok){
             setCurrentUser(null); 
             }
-          
+        
         });
-      }
+    }
 
 
 

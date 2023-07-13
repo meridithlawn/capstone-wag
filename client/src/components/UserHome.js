@@ -2,6 +2,10 @@ import React, {useState, useEffect, useContext} from 'react'
 // import {useHistory} from 'react-router-dom'
 import { UserContext } from '../context/userContext'
 import UserCard from './UserCard'
+import FriendCard from './FriendCard'
+import FoeCard from './FoeCard'
+import FoeCollection from './FoeCollection'
+import FriendCollection from './FriendCollection'
 
 function UserHome(){
     const {handleSignOutClick, currentUser} = useContext(UserContext)
@@ -23,25 +27,28 @@ function UserHome(){
 
     const filteredUserCategoryNegOne = allUsers.filter(user => currentUser.get_neg_interactions.includes(user.id))
         console.log("foes", filteredUserCategoryNegOne)
+    const mappedFoes = filteredUserCategoryNegOne.map(user => <FoeCard key={user.id}{...user}/>)
 
     const filteredUserCategoryPosOne = allUsers.filter(user => currentUser.get_users_w_pos_interactions.includes(user.id))
         console.log("friends", filteredUserCategoryPosOne)
-    // const user_category_pos_one = 
+    const mappedFriends = filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
+
+    // const filteredUserCategoryNull = allUsers.filter(user => !currentUser.get_user_interactions.includes(user.id))
+    //     console.log("We haven't met yet", filteredUserCategoryNull)
 
 
 return (
     <>
         <h1>Nice to see you, {currentUser.username}!</h1>
+        <button onClick={handleSignOutClick}>sign out</button>
         <h2>find new friends</h2>
         <div>
             {mappedUsers}
         </div>
-        <h2>my friends currently walking</h2>
-        <div>
-            {mappedUsers}
-        </div>
-        <button onClick={handleSignOutClick}>sign out</button>
-    </>
+        <FoeCollection mappedFoes={mappedFoes}/>
+        <FriendCollection mappedFriends={mappedFriends}/>
+        
+        </>
 )
 
 
