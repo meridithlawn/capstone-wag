@@ -41,7 +41,6 @@ class User(db.Model, SerializerMixin):
         return self.sent_interactions + self.received_interactions
     # returns all neg interaction
     def get_neg_interactions(self):
-        # dog_house = [intr for intr in self.get_user_interactions() if intr.relation_cat == -1]
         dog_house = [intr.receiver_id for intr in self.sent_interactions if intr.relation_cat == -1]
         return dog_house
     
