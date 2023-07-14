@@ -75,8 +75,10 @@ class User(db.Model, SerializerMixin):
     
     handler = db.relationship("Handler", back_populates="users")
 
-    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions')
-    serialize_rules = ('-handler.id', '-sent_interactions', '-received_interactions', '-users_i_reacted_to', '-users_reacted_to_me' '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
+    # serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions')
+    # serialize_rules = ('-handler.id', '-sent_interactions', '-received_interactions', '-users_i_reacted_to', '-users_reacted_to_me' '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
+    serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions', 'sent_interactions.receiver_id', 'users_i_reacted_to.id')
+    serialize_rules = ('-handler.id', '-received_interactions','-users_i_reacted_to', '-users_reacted_to_me', '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
 
     @hybrid_property
     def password_hash(self):

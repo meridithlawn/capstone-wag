@@ -33,6 +33,8 @@ function UserHome(){
         console.log("friends", filteredUserCategoryPosOne)
     const mappedFriends = filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
 
+    // const filteredUserCategoryNew = allUsers.filter(user => currentUser.includes(users_i_reacted_to.id))
+
     // const filteredUserCategoryNull = allUsers.filter(user => !currentUser.get_user_interactions.includes(user.id))
     //     console.log("We haven't met yet", filteredUserCategoryNull)
 
