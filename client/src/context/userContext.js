@@ -38,29 +38,12 @@ const UserProvider = ({children}) => {
     useEffect(() => {
         fetch("/api/v1/check-user")
         .then(response => {
-          if (response.ok) {
+            if (response.ok) {
             response.json()
             .then(saveUser)
-          }
+            }
         })
     }, [])
-
-    // const handleFetchTraditional = () => {
-    // fetch('/api/v1/users')
-    // .then(response => {
-    //     response.json().then(data => {
-    //         if(response.status === 200){
-    //             dispatch({
-    //                 type: 'fetch',
-    //                 payload: data
-    //             })
-    //         }else{
-    //             throw new Error("Could not complete the request. Check request")  
-    //         }
-    //     })
-    // })
-    // .catch(error => alert(error)) 
-    // }
 
     const handleSignUp = (values, resetForm, setErrors) => {
         const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic} = values
@@ -110,6 +93,34 @@ const UserProvider = ({children}) => {
         }
         })
     }
+// IS IT NECESSARY TO ADD CURLY BRACES AROUND CURRENTUSER IN THE LINE BELOW?
+    const handleEditProfile = (values, setErrors) => {
+        const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic, bio} = values
+            const fixedToBool = fixed.trim() === "yes" ? true : false
+
+            fetch(`/api/v1//users/${currentUser.id}`, {
+                method:"PATCH",
+                headers: {
+                    "Content-Type": "application/json",   
+                },
+                body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed: fixedToBool, profile_pic, bio}}),
+            })
+            .then((resp) => {
+                console.log("RESP", resp)
+                if (resp.ok) {
+                    resp.json()
+                    .then(data => {
+                        saveUser(data)
+                    })
+                } else {
+                    resp.json()
+                    .then((error) => setErrors(error.message))
+                        // or use setErrors state to update error message
+                }
+            })
+                .catch((error) => console.log(error));
+            
+    }
     
     const handleSignOutClick= () => {
         fetch("/api/v1/signout", {method: "DELETE"})
@@ -125,7 +136,7 @@ const UserProvider = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={{handleSignOutClick, handleSignUp, currentUser, saveUser, handleSignInClick}}>
+        <UserContext.Provider value={{handleSignOutClick, handleSignUp, currentUser, saveUser, handleSignInClick, handleEditProfile}}>
             {children}
         </UserContext.Provider>
     )
