@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import React from "react";
 
 function UserCard({username, profile_pic, breed, age, weight, fixed}) {
 

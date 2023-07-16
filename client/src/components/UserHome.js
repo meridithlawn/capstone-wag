@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react'
 // import {useHistory} from 'react-router-dom'
 import { UserContext } from '../context/userContext'
+import { Route, Switch } from 'react-router-dom'
 import UserCard from './UserCard'
-import FriendCard from './FriendCard'
-import FoeCard from './FoeCard'
 import FoeCollection from './FoeCollection'
 import FriendCollection from './FriendCollection'
+import UserProfile from './UserProfile'
+import ReportForm from './ReportForm'
 
 function UserHome(){
     const {handleSignOutClick, currentUser} = useContext(UserContext)
@@ -23,33 +24,58 @@ function UserHome(){
     
         console.log("all users,", allUsers)
 
-    const mappedUsers = allUsers.map(user => <UserCard key={user.id} {...user}/>)
+    // const mappedUsers = allUsers.map(user => <UserCard key={user.id} {...user}/>)
 
+    
     const filteredUserCategoryNegOne = allUsers.filter(user => currentUser.get_neg_interactions.includes(user.id))
         console.log("foes", filteredUserCategoryNegOne)
-    const mappedFoes = filteredUserCategoryNegOne.map(user => <FoeCard key={user.id}{...user}/>)
+    
 
     const filteredUserCategoryPosOne = allUsers.filter(user => currentUser.get_users_w_pos_interactions.includes(user.id))
         console.log("friends", filteredUserCategoryPosOne)
-    const mappedFriends = filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
+  
 
-    // const filteredUserCategoryNew = allUsers.filter(user => currentUser.includes(users_i_reacted_to.id))
+    // maybe need to iterate through currentUser.sent_interactions then compare to all users. maybe below method is backwards?
 
-    // const filteredUserCategoryNull = allUsers.filter(user => !currentUser.get_user_interactions.includes(user.id))
-    //     console.log("We haven't met yet", filteredUserCategoryNull)
+    // const filteredUserCategoryNew = allUsers.filter((user) => {
+    //     const newList = []
+    //     if (currentUser.sent_interactions.receiver_id !== (user.id)) {
+    //         newList.push(user)
+    //     }
+    //     return newList
+    // })
+
+    const filteredUserCategoryNew = allUsers.filter (user => currentUser.sent_interactions.receiver_id !== user.id)
+
+
+    const mappedNewUsers = filteredUserCategoryNew.map(user => <UserCard key={user.id} {...user}/>)
+    console.log("FILTERED CAT NEW", filteredUserCategoryNew)
+
 
 
 return (
     <>
+    
         <h1>Nice to see you, {currentUser.username}!</h1>
         <button onClick={handleSignOutClick}>sign out</button>
         <h2>find new friends</h2>
         <div>
-            {mappedUsers}
+            {mappedNewUsers}
         </div>
-        <FoeCollection mappedFoes={mappedFoes}/>
-        <FriendCollection mappedFriends={mappedFriends}/>
-        
+        <Switch>
+        <Route path= '/foes'>
+            <FoeCollection filteredUserCategoryNegOne={filteredUserCategoryNegOne}/>
+        </Route>
+        <Route path='/friends'>
+            <FriendCollection mfilteredUserCategoryPosOne={filteredUserCategoryPosOne}/>
+        </Route>
+        <Route path='/my-profile'>
+            <UserProfile/>
+        </Route>
+        <Route path='/reports'>
+            <ReportForm/>
+        </Route>
+        </Switch>
         </>
 )
 

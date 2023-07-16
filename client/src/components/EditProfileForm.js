@@ -21,7 +21,8 @@ function EditProfileForm (){
         age: yup.string().required("Please enter you dog's age"),
         weight: yup.string().required("Please enter your dog's weight"),
         fixed: yup.string().required("Please enter yes if your dog is spayed/neutered, no if not"),
-        profile_pic: yup.string().required("Please enter photo url")
+        profile_pic: yup.string().required("Please enter photo url"),
+        bio: yup.string().required("update your bio")
     })
 
     const formik = useFormik({
@@ -36,7 +37,7 @@ function EditProfileForm (){
             weight: currentUser.weight,
             fixed: currentUser.fixed,
             profile_pic: currentUser.profile_pic,
-            bio: currentUser.bio,
+            bio: "",
         },
 
         validationSchema: userSchema,
@@ -217,7 +218,7 @@ function EditProfileForm (){
                     value={formik.values.bio}
                 />
 
-                {formik.errors.bio ? <div>{formik.errors.profile_pic}</div> : null}
+                {formik.errors.bio ? <div>{formik.errors.bio}</div> : null}
 
                 <button type="submit">Submit</button>
 
