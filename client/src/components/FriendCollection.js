@@ -1,11 +1,13 @@
 import React from "react";
 import FriendCard from './FriendCard'
 
-function FriendCollection ({mappedFriends}){
+function FriendCollection ({filteredUserCategoryPosOne}){
+
+    const mappedFriends = filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
 
     return (
-        <div>
-            <FriendCard mappedFriends={mappedFriends}/>
+        <div> <h1>friends</h1>
+            {mappedFriends}
         </div>
     )
 }

@@ -2,11 +2,16 @@
 import React from "react";
 import FoeCard from './FoeCard'
 
-function FoeCollection({mappedFoes}) {
+
+
+function FoeCollection({filteredUserCategoryNegOne}) {
+
+    const mappedFoes = filteredUserCategoryNegOne.map(user => <FoeCard key={user.id}{...user}/>)
 
     return (
         <div>
-            <FoeCard mappedFoes={mappedFoes}/>
+            <h1>Foes</h1>
+            {mappedFoes}
         </div>
     )
 }
