@@ -1,12 +1,21 @@
 
-import React from "react";
+import {useContext} from "react";
 import FoeCard from './FoeCard'
+import { UserContext } from "../context/userContext";
 
 
 
-function FoeCollection({filteredUserCategoryNegOne}) {
+function FoeCollection({allUsers}) {
+    const { handleSignOutClick, currentUser } = useContext(UserContext);
+
+    const filteredUserCategoryNegOne = allUsers.filter((user) =>
+    currentUser.get_neg_interactions.includes(user.id)
+  );
+  console.log("foes", filteredUserCategoryNegOne);
 
     const mappedFoes = filteredUserCategoryNegOne.map(user => <FoeCard key={user.id}{...user}/>)
+
+    console.log(mappedFoes)
 
     return (
         <div>
