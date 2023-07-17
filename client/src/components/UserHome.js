@@ -28,9 +28,10 @@ function UserHome({allUsers}) {
   //     return newList
   // })
 
+// .find will have a true false boolean. returns the element if found, otherwise undefined
   const filteredUserCategoryNew = allUsers.filter(
-    (user) => currentUser.sent_interactions.receiver_id !== user.id
-  );
+    (user) => !currentUser.sent_interactions.find(interaction => interaction.receiver_id === user.id)).filter((user) => user.id !== currentUser.id)
+
 
   const mappedNewUsers = filteredUserCategoryNew.map((user) => (
     <UserCard key={user.id} {...user} />
