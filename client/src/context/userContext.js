@@ -132,6 +132,20 @@ const UserProvider = ({children}) => {
         
         });
     }
+// DELETE USER NEED TO TEST: IS CURRENTUSER.ID CORRECT TO USE? OR JUST ID
+    // const handleDelete = (e) => {
+    //     fetch(`/api/v1/users/${currentUser.id}`,{
+    //       method: 'DELETE'
+    //     })
+    //     .then(res => {
+    //       if (res.ok){
+    //         saveUser(null)
+    //         // history.push("/signin")
+    //       }
+          
+    //     })
+    //     .catch(error => console.error(error))
+    // }
 
 
 
