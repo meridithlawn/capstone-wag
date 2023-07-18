@@ -12,13 +12,14 @@ function UserProfile () {
         setSeeForm(currentVal => !currentVal)
     }
 
-    const {currentUser, handleSignOutClick, handleEditProfile, saveUser} = useContext(UserContext)
+    const {currentUser, handleSignOutClick, handleEditProfile, saveUser, handleDelete} = useContext(UserContext)
 
     return (
         <div>
-            <h1> create user profile</h1>
-            <button>{handleSignOutClick}</button>
-            <button>{handleEditProfile}</button>
+            <h1> My profile</h1>
+            <button onClick={handleSignOutClick}>Sign out</button>
+            {/* <button onClick={handleEditProfile}>Edit Profile</button> */}
+            <button onClick={handleDelete}>Delete Profile</button>
             <button variant='secondary' onClick={toggleForm}>Edit your profile</button>
             {seeForm ? <EditProfileForm /> : null}
             <button variant='secondary' onClick={()=>history.push("api/v1/home")}>Home</button>

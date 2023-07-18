@@ -193,10 +193,10 @@ class Interactions(Resource):
             #     (sender_id == Interaction.sender_id and receiver_id == Interaction.receiver_id),
             #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
             # ).first()
-            # existing_interaction = Interaction.query.filter(or_(
-            #     (receiver_id == Interaction.sender_id and data['sender_id'] == Interaction.receiver_id),
-            #     (receiver_id == Interaction.receiver_id and data['sender_id'] == Interaction.sender_id))
-            # ).first()
+            existing_interaction = Interaction.query.filter(or_(
+                (receiver_id == Interaction.sender_id and data['sender_id'] == Interaction.receiver_id),
+                (receiver_id == Interaction.receiver_id and data['sender_id'] == Interaction.sender_id))
+            ).first()
             # existing_interaction = Interaction.query.filter(and_(receiver_id == Interaction.sender_id), (sender_id == Interaction.receiver_id)).first()
             #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
             # ).first()))
