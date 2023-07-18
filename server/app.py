@@ -197,10 +197,12 @@ class Interactions(Resource):
             #     (receiver_id == Interaction.sender_id and data['sender_id'] == Interaction.receiver_id),
             #     (receiver_id == Interaction.receiver_id and data['sender_id'] == Interaction.sender_id))
             # ).first()
-            existing_interaction = Interaction.query.filter(and_(receiver_id == Interaction.sender_id), (receiver_id == Interaction.receiver_id)).first()
+            # existing_interaction = Interaction.query.filter(and_(receiver_id == Interaction.sender_id), (sender_id == Interaction.receiver_id)).first()
             #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
             # ).first()))
-            import ipdb; ipdb.set_trace()
+            existing_interaction = Interaction.query.filter(Interaction.sender_id == receiver_id and Interaction.receiver_id == sender_id).first()
+                                                        
+            # import ipdb; ipdb.set_trace()
             # existing_interaction = Interaction.query.filter(sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id).first()
             # import ipdb; ipdb.set_trace()
             # existing_interaction = [interaction for interaction in Interaction.query.all() if sender_id == interaction.receiver_id and receiver_id == interaction.sender_id]
@@ -208,15 +210,16 @@ class Interactions(Resource):
             if existing_interaction:
                 if existing_interaction.relation_cat == 0:
                     existing_interaction.relation_cat = 1
+                    import ipdb; ipdb.set_trace()
                     db.session.add(existing_interaction)
                     db.session.commit()
                     return make_response(existing_interaction.to_dict(), 201)
-                
+                # this line is working
                 elif existing_interaction.relation_cat == -1:
                     return make_response("category -1 already exists between these users")
-            
+                
+            # else statement works for creating a new interaction
             else:
-                # Create a new interaction with relation_cat = 0
                 new_interaction = Interaction(sender_id=sender_id, receiver_id=receiver_id, relation_cat=0)
                 db.session.add(new_interaction)
                 db.session.commit()
