@@ -3,6 +3,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 // import {useContext} from 'react'
 
 import { UserContext } from '../context/userContext'
+import NavBar from './NavBar'
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm'
 import UserHome from './UserHome'
@@ -54,26 +55,27 @@ if (!currentUser) {
   }  
   return (
     <div>
+    <NavBar/>
       <Switch>
-        <Route path = '/home'>
+        <Route exact path = '/'>
           <UserHome 
           allUsers={allUsers}
           />
         </Route>
-        <Route exact path="/foes">
+        <Route path="/foes">
           <FoeCollection
             allUsers={allUsers}
           />
         </Route>
-        <Route exact path="/friends">
+        <Route path="/friends">
           <FriendCollection
             allUsers={allUsers}
           />
         </Route>
-        <Route exact path="/my-profile">
+        <Route path="/my-profile">
           <UserProfile />
         </Route>
-        <Route exact path="/reports">
+        <Route path="/reports">
           <ReportForm />
         </Route>
       </Switch>

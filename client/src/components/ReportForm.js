@@ -48,7 +48,17 @@ function ReportForm() {
     });
     return (
         <div>
-        <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
+            <label htmlFor="sender_id">sender_id:</label>
+            <input
+                id="sender_id"
+                name="sender_id"
+                type="text"
+                placeholder="sender_id"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.sender_id} 
+            />
             <label htmlFor="receiver_id">receiver_id:</label>
             <input
                 id="receiver_id"
@@ -83,12 +93,13 @@ function ReportForm() {
             <input
                 id="incident_datetime"
                 name="incident_datetime"
-                type="text"
+                type="datetime"
                 placeholder="date time"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.incident_datetime} 
             />
+            <button type="submit">Submit</button>
             </form>
             </div>
 

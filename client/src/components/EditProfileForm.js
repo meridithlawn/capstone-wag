@@ -11,12 +11,12 @@ function EditProfileForm (){
     const {currentUser, saveUser, handleEditProfile} = useContext(UserContext)
 
     const userSchema = yup.object({
-        first_name: yup.string().required("Please enter first name"),
-        last_name: yup.string().required("Please enter last name"),
-        email: yup.string().required("Please enter email"),
-        phone: yup.string().required("Please enter 10 digit phone number"),
+        // first_name: yup.string().required("Please enter first name"),
+        // last_name: yup.string().required("Please enter last name"),
+        // email: yup.string().required("Please enter email"),
+        // phone: yup.string().required("Please enter 10 digit phone number"),
         username: yup.string().required("Please enter a username"),
-        password: yup.string().required("Please enter a valid password"),
+        // password: yup.string().required("Please enter a valid password"),
         breed: yup.string().required("Please enter your dog's breed"),
         age: yup.string().required("Please enter you dog's age"),
         weight: yup.string().required("Please enter your dog's weight"),
@@ -27,10 +27,10 @@ function EditProfileForm (){
 
     const formik = useFormik({
         initialValues: {
-            first_name: currentUser.first_name,
-            last_name: currentUser.last_name,
-            email: currentUser.email,
-            phone: currentUser.phone,
+            // first_name: currentUser.first_name,
+            // last_name: currentUser.last_name,
+            // email: currentUser.email,
+            // phone: currentUser.phone,
             username: currentUser.username,
             breed: currentUser.breed,
             age: currentUser.age,
@@ -77,7 +77,7 @@ function EditProfileForm (){
             <p>{errors}</p>
             <form onSubmit={formik.handleSubmit}>
 
-            <label htmlFor="first_name">first name:</label>
+            {/* <label htmlFor="first_name">first name:</label>
                 <input
                     id="first_name"
                     name="first_name"
@@ -123,7 +123,7 @@ function EditProfileForm (){
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
                 />
-                {formik.errors.phone ? <div>{formik.errors.phone}</div> : null}
+                {formik.errors.phone ? <div>{formik.errors.phone}</div> : null} */}
 
             <label htmlFor="username">Userame:</label>
                 <input
@@ -137,7 +137,7 @@ function EditProfileForm (){
                 />
                 {formik.errors.username ? <div>{formik.errors.username}</div> : null}
 
-            <label htmlFor="password">Password:</label>
+            {/* <label htmlFor="password">Password:</label>
                 <input
                     id="password"
                     name="password"
@@ -147,7 +147,7 @@ function EditProfileForm (){
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                 />
-                {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                {formik.errors.password ? <div>{formik.errors.password}</div> : null} */}
 
             <label htmlFor="breed">Breed:</label>
                 <input
