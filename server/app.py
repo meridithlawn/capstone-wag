@@ -8,7 +8,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, or_, and_
 from flask_bcrypt import Bcrypt
 # Local imports
 from config import app, db, api, bcrypt
@@ -169,12 +169,81 @@ class UserById(Resource):
         
 api.add_resource(UserById, "/users/<int:id>")
 
+class Interactions(Resource):
+    def get(self):
+        all_interactions = [i.to_dict () for i in Interaction.query.all()]
+        if all_interactions:
+            return make_response(all_interactions, 200)
+        return make_response("no interactions found, 404")
+    
+    def post(self):
+        try:
+            data = request.get_json()
+            
+            sender_id = data['sender_id']
+            receiver_id = data['receiver_id']
+            # import ipdb; ipdb.set_trace()
+
+    #         Check if the interaction already exists in either direction
+            # existing_interaction = Interaction.query.filter(
+            #     (Interaction.sender_id == sender_id and Interaction.receiver_id == receiver_id) or
+            #     (Interaction.sender_id == receiver_id and Interaction.receiver_id == sender_id)
+            # ).first()
+            # existing_interaction = Interaction.query.filter(or_(
+            #     (sender_id == Interaction.sender_id and receiver_id == Interaction.receiver_id),
+            #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
+            # ).first()
+            # existing_interaction = Interaction.query.filter(or_(
+            #     (receiver_id == Interaction.sender_id and data['sender_id'] == Interaction.receiver_id),
+            #     (receiver_id == Interaction.receiver_id and data['sender_id'] == Interaction.sender_id))
+            # ).first()
+            existing_interaction = Interaction.query.filter(and_(receiver_id == Interaction.sender_id), (receiver_id == Interaction.receiver_id)).first()
+            #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
+            # ).first()))
+            import ipdb; ipdb.set_trace()
+            # existing_interaction = Interaction.query.filter(sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id).first()
+            # import ipdb; ipdb.set_trace()
+            # existing_interaction = [interaction for interaction in Interaction.query.all() if sender_id == interaction.receiver_id and receiver_id == interaction.sender_id]
+            # import ipdb; ipdb.set_trace()
+            if existing_interaction:
+                if existing_interaction.relation_cat == 0:
+                    existing_interaction.relation_cat = 1
+                    db.session.add(existing_interaction)
+                    db.session.commit()
+                    return make_response(existing_interaction.to_dict(), 201)
+                
+                elif existing_interaction.relation_cat == -1:
+                    return make_response("category -1 already exists between these users")
+            
+            else:
+                # Create a new interaction with relation_cat = 0
+                new_interaction = Interaction(sender_id=sender_id, receiver_id=receiver_id, relation_cat=0)
+                db.session.add(new_interaction)
+                db.session.commit()
+                return make_response(new_interaction.to_dict(), 201)
+        except Exception as e:
+            # import ipdb; ipdb.set_trace()
+            return make_response({"error creating or updating interaction": [str(e)]})
+        
+api.add_resource(Interactions, "/interactions")
+
 class Reports(Resource):
     def get(self):
         all_reports =[r.to_dict() for r in Report.query.all()]
         if all_reports:
             return make_response(all_reports, 200)
         return make_response("no users found, 404")
+    
+    def post(self):
+        try:
+            data = request.get_json()
+            report = Report(**data)
+            db.session.add(report)
+            db.session.commit()
+            return make_response(report.to_dict(), 201)
+        except Exception as e:
+            return make_response(({"error": str(e)}), 400)
+
 api.add_resource(Reports, "/reports")
 
 

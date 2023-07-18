@@ -18,15 +18,6 @@ function UserHome({allUsers}) {
 //   );
 //   console.log("friends", filteredUserCategoryPosOne);
 
-  // maybe need to iterate through currentUser.sent_interactions then compare to all users. maybe below method is backwards?
-
-  // const filteredUserCategoryNew = allUsers.filter((user) => {
-  //     const newList = []
-  //     if (currentUser.sent_interactions.receiver_id !== (user.id)) {
-  //         newList.push(user)
-  //     }
-  //     return newList
-  // })
 
 // .find will have a true false boolean. returns the element if found, otherwise undefined
   const filteredUserCategoryNew = allUsers.filter(

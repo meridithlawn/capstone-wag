@@ -132,6 +132,30 @@ const UserProvider = ({children}) => {
         
         });
     }
+
+    const handleLikeClick = (e) => {
+        fetch("/api/v1/interactions", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",   
+            },
+            body: JSON.stringify(values, null, 2),
+        }).then(resp => {
+            console.log("RESP", resp)
+            if (resp.ok) {
+                resp.json()
+                .then(data => {
+                    // saveUser(data)
+                })
+            }
+            else {
+                resp.json()
+                .then(errorObj => {
+                    alert(errorObj.error)
+                })
+            }
+        })
+    }
 // DELETE USER NEED TO TEST: IS CURRENTUSER.ID CORRECT TO USE? OR JUST ID
     // const handleDelete = (e) => {
     //     fetch(`/api/v1/users/${currentUser.id}`,{
