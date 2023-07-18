@@ -2,7 +2,9 @@ import {useContext} from "react";
 import FriendCard from './FriendCard'
 import { UserContext } from "../context/userContext";
 
-    function FriendCollection ({allUsers}){const { handleSignOutClick, currentUser } = useContext(UserContext);
+    function FriendCollection ({allUsers}){
+        
+    const { handleSignOutClick, currentUser } = useContext(UserContext);
 
 
 

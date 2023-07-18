@@ -5,32 +5,12 @@ import reactRouterDom from 'react-router-dom'
 const UserContext = createContext()
 
 
-// const initialState = []
-
-// const reducer = (state, action) => {
-//     switch (action.type) {
-//         case "fetch":
-//             return action.payload
-
-//         case "add" :
-//             return [...state, action.payload];
-//             // for the patch below, the payload is the updated object. probably need to do these on UserProvider instead for full CRUD on user
-//         case "patch":
-//             return state.map(user => user.id === action.payload.id ? action.payload : user);
-//         case "remove":
-//             return state.filter(user => user.id !== action.payload);
-//         default:
-//             return state;
-
-//     }
-// }
-
 const UserProvider = ({children}) => {
 
     const history = useHistory()
-    // const [currentUser, setCurrentUser] = useState(null)
+    
     const [currentUser, setCurrentUser] = useState(false)
-    // const [state, dispatch] = useReducer(reducer, initialState)
+    
     const saveUser = (new_user) => {
         setCurrentUser(new_user)
     }
@@ -95,15 +75,16 @@ const UserProvider = ({children}) => {
     }
 // IS IT NECESSARY TO ADD CURLY BRACES AROUND CURRENTUSER IN THE LINE BELOW?
     const handleEditProfile = (values, setErrors) => {
-        const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic, bio} = values
-            const fixedToBool = fixed.trim() === "yes" ? true : false
+        // const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic, bio} = values
+        const {username, breed, age, weight, fixed, profile_pic, bio} = values    
+        const fixedToBool = fixed.trim() === "yes" ? true : false
 
             fetch(`/api/v1//users/${currentUser.id}`, {
                 method:"PATCH",
                 headers: {
                     "Content-Type": "application/json",   
                 },
-                body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed: fixedToBool, profile_pic, bio}}),
+                body: JSON.stringify({username, breed, age, weight, fixed: fixedToBool, profile_pic, bio}),
             })
             .then((resp) => {
                 console.log("RESP", resp)
