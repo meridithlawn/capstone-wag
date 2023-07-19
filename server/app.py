@@ -148,6 +148,8 @@ class UserById(Resource):
         return make_response(({"error": "404: User with that ID not found"}), 404)
     
     def delete(self, id):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         try:
             user = db.session.get(User, id)
             db.session.delete(user)
@@ -157,6 +159,8 @@ class UserById(Resource):
             return make_response(({"error": "404: User not found"}), 404)
         
     def patch(self, id):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         try:
             data = request.get_json()
             user = db.session.get(User, id)
@@ -171,12 +175,16 @@ api.add_resource(UserById, "/users/<int:id>")
 
 class Interactions(Resource):
     def get(self):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         all_interactions = [i.to_dict () for i in Interaction.query.all()]
         if all_interactions:
             return make_response(all_interactions, 200)
         return make_response("no interactions found, 404")
     
     def post(self):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         try:
             data = request.get_json()
             
@@ -185,25 +193,10 @@ class Interactions(Resource):
             # import ipdb; ipdb.set_trace()
 
     #         Check if the interaction already exists in either direction
-            # existing_interaction = Interaction.query.filter(
-            #     (Interaction.sender_id == sender_id and Interaction.receiver_id == receiver_id) or
-            #     (Interaction.sender_id == receiver_id and Interaction.receiver_id == sender_id)
-            # ).first()
-            # existing_interaction = Interaction.query.filter(or_(
-            #     (sender_id == Interaction.sender_id and receiver_id == Interaction.receiver_id),
-            #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
-            # ).first()
             existing_interaction = Interaction.query.filter(receiver_id == Interaction.sender_id, sender_id == Interaction.receiver_id).first()
-            # existing_interaction = Interaction.query.filter(and_(receiver_id == Interaction.sender_id), (sender_id == Interaction.receiver_id)).first()
-            #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
-            # ).first()))
-            # existing_interaction = Interaction.query.filter(Interaction.sender_id == receiver_id and Interaction.receiver_id == sender_id).first()
-                                                        
-            import ipdb; ipdb.set_trace()
-            # existing_interaction = Interaction.query.filter(sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id).first()
+                                    
             # import ipdb; ipdb.set_trace()
-            # existing_interaction = [interaction for interaction in Interaction.query.all() if sender_id == interaction.receiver_id and receiver_id == interaction.sender_id]
-            # import ipdb; ipdb.set_trace()
+
             if existing_interaction:
                 if existing_interaction.relation_cat == 0:
                     existing_interaction.relation_cat = 1
@@ -230,15 +223,25 @@ api.add_resource(Interactions, "/interactions")
 
 class Reports(Resource):
     def get(self):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         all_reports =[r.to_dict() for r in Report.query.all()]
         if all_reports:
             return make_response(all_reports, 200)
         return make_response("no users found, 404")
     
     def post(self):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         try:
             data = request.get_json()
-            report = Report(**data)
+            # report = Report(**data)
+            report = Report(
+                sender_id=data["sender_id"],
+                receiver_id=data["receiver_id"],
+                concern=data["concern"],
+                description=data["description"],
+            )
             db.session.add(report)
             db.session.commit()
             return make_response(report.to_dict(), 201)
@@ -250,6 +253,8 @@ api.add_resource(Reports, "/reports")
 
 class Handlers(Resource):
     def get(self):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         all_handlers = [h.to_dict() for h in Handler.query.all()]
         if all_handlers:
             return make_response(all_handlers, 200)
@@ -258,12 +263,16 @@ api.add_resource(Handlers, "/handlers")
 
 class HandlerByID(Resource):
     def get(self, id):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         handler_by_id = db.session.get(Handler, id)
         if handler_by_id:
             return make_response(handler_by_id.to_dict(), 200)
         return make_response(({"error": "404: Handler with that ID not found"}), 404)
     
     def patch(self, id):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         try:
             data = request.get_json()
             handler = db.session.get(Handler, id)
@@ -275,6 +284,8 @@ class HandlerByID(Resource):
             return make_response(({"error": str(e)}),400)    
     
     def delete(self, id):
+        # if "user_id" not in session:
+        #     return make_response({"error": "Unauthorized"}, 401)
         try:
             handler = db.session.get(Handler, id)
             db.session.delete(handler)

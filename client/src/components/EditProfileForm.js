@@ -37,7 +37,7 @@ function EditProfileForm (){
             weight: currentUser.weight,
             fixed: currentUser.fixed,
             profile_pic: currentUser.profile_pic,
-            bio: "",
+            bio: currentUser.bio,
         },
 
         validationSchema: userSchema,

@@ -16,7 +16,7 @@ function App() {
 // Code goes here!
 
 // if you don't want/need to use all of the values, you can destructure to just one ones you need in this component
-const {currentUser, } = useContext(UserContext) 
+const { currentUser } = useContext(UserContext) 
 // -> include whichever values you want to inherit in the curly braces to destructure
 
 const [showSignInForm, setShowSignInForm] = useState(false)

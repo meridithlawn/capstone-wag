@@ -1,13 +1,17 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import { UserContext } from "../context/userContext";
 
 function ReportForm() {
 
+    const [reports, setReports] = useState({})
+
     const {currentUser} = useContext(UserContext)
+
     const userSchema = yup.object({
-        details: yup.string().required("Please provide details about the incident"),
+
+        description: yup.string().required("Please provide details about the incident"),
         
     })
     const formik = useFormik ({
@@ -15,13 +19,12 @@ function ReportForm() {
             sender_id: currentUser.id,
             receiver_id: "",
             concern: "",
-            description: "",
-            incident_datetime: ""
+            description: ""
+            // incident_datetime: ""
             
         },
         validationSchema: userSchema,
         onSubmit: values => {
-            // alert(JSON.stringify(values, null));
             console.log("im in fetch")
             fetch("/api/v1/reports", {
                 method:"POST",
@@ -34,7 +37,7 @@ function ReportForm() {
                 if (resp.ok) {
                     resp.json()
                     .then(data => {
-                        // update users with reports?
+                        setReports(data)
                     })
                 }
                 else {
@@ -89,7 +92,7 @@ function ReportForm() {
                 onBlur={formik.handleBlur}
                 value={formik.values.description} 
             />
-            <label htmlFor="incident_datetime">incident_datetime:</label>
+            {/* <label htmlFor="incident_datetime">incident_datetime:</label>
             <input
                 id="incident_datetime"
                 name="incident_datetime"
@@ -98,7 +101,7 @@ function ReportForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.incident_datetime} 
-            />
+            /> */}
             <button type="submit">Submit</button>
             </form>
             </div>
