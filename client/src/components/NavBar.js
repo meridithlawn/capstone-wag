@@ -12,6 +12,7 @@ function NavBar() {
       <button onClick={handleSignOutClick}>sign out</button>
       <Link to="/"> Home </Link>
       <Link to="/friends"> Friends </Link>
+      <Link to="/chat">Chat</Link>
       <Link to="/foes"> Foes </Link>
       <Link to="/my-profile"> Profile </Link>
       <Link to="/reports">Report</Link>

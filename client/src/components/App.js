@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
-// import {useContext} from 'react'
-
+ import { ChatEngine } from 'react-chat-engine';
 import { UserContext } from '../context/userContext'
 import NavBar from './NavBar'
 import SignInForm from './SignInForm'
@@ -77,6 +76,13 @@ if (!currentUser) {
         </Route>
         <Route path="/reports">
           <ReportForm />
+        </Route>
+        <Route path="/chat">
+        <ChatEngine
+            projectID='f2276eae-256e-4e25-ae18-9722533ca53c'
+            userName='andresvillarreal'
+            userSecret='andresvillarreal'
+ 		    />
         </Route>
       </Switch>
     </div>
