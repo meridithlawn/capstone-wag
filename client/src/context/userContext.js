@@ -114,29 +114,30 @@ const UserProvider = ({children}) => {
         });
     }
 
-    // const handleLikeClick = (e) => {
-    //     fetch("/api/v1/interactions", {
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json",   
-    //         },
-    //         body: JSON.stringify(values, null, 2),
-    //     }).then(resp => {
-    //         console.log("RESP", resp)
-    //         if (resp.ok) {
-    //             resp.json()
-    //             .then(data => {
-    //                 // saveUser(data)
-    //             })
-    //         }
-    //         else {
-    //             resp.json()
-    //             .then(errorObj => {
-    //                 alert(errorObj.error)
-    //             })
-    //         }
-    //     })
-    // }
+    const handleLikeClick = (values) => {
+        fetch("/api/v1/interactions", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",   
+            },
+            body: JSON.stringify(values, null, 2),
+        }).then(resp => {
+            console.log("RESP", resp)
+            if (resp.ok) {
+                resp.json()
+                .then(data => {
+                    debugger;
+                    // saveUser(data)
+                })
+            }
+            else {
+                resp.json()
+                .then(errorObj => {
+                    alert(errorObj.error)
+                })
+            }
+        })
+    }
 // DELETE USER WORKS BUT DOESN'T DELETE HANDLER
     const handleDelete = (e) => {
         fetch(`/api/v1/users/${currentUser.id}`,{
@@ -155,7 +156,7 @@ const UserProvider = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={{handleSignOutClick, handleSignUp, currentUser, saveUser, handleSignInClick, handleEditProfile, handleDelete}}>
+        <UserContext.Provider value={{handleSignOutClick, handleLikeClick, handleSignUp, currentUser, saveUser, handleSignInClick, handleEditProfile, handleDelete}}>
             {children}
         </UserContext.Provider>
     )

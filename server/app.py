@@ -180,7 +180,7 @@ class Interactions(Resource):
         try:
             data = request.get_json()
             
-            sender_id = data['sender_id']
+            sender_id = session.get("user_id")
             receiver_id = data['receiver_id']
             # import ipdb; ipdb.set_trace()
 
@@ -193,16 +193,13 @@ class Interactions(Resource):
             #     (sender_id == Interaction.sender_id and receiver_id == Interaction.receiver_id),
             #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
             # ).first()
-            existing_interaction = Interaction.query.filter(or_(
-                (receiver_id == Interaction.sender_id and data['sender_id'] == Interaction.receiver_id),
-                (receiver_id == Interaction.receiver_id and data['sender_id'] == Interaction.sender_id))
-            ).first()
+            existing_interaction = Interaction.query.filter(receiver_id == Interaction.sender_id, sender_id == Interaction.receiver_id).first()
             # existing_interaction = Interaction.query.filter(and_(receiver_id == Interaction.sender_id), (sender_id == Interaction.receiver_id)).first()
             #     (sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id))
             # ).first()))
-            existing_interaction = Interaction.query.filter(Interaction.sender_id == receiver_id and Interaction.receiver_id == sender_id).first()
+            # existing_interaction = Interaction.query.filter(Interaction.sender_id == receiver_id and Interaction.receiver_id == sender_id).first()
                                                         
-            # import ipdb; ipdb.set_trace()
+            import ipdb; ipdb.set_trace()
             # existing_interaction = Interaction.query.filter(sender_id == Interaction.receiver_id and receiver_id == Interaction.sender_id).first()
             # import ipdb; ipdb.set_trace()
             # existing_interaction = [interaction for interaction in Interaction.query.all() if sender_id == interaction.receiver_id and receiver_id == interaction.sender_id]
@@ -211,11 +208,12 @@ class Interactions(Resource):
                 if existing_interaction.relation_cat == 0:
                     existing_interaction.relation_cat = 1
                     import ipdb; ipdb.set_trace()
-                    db.session.add(existing_interaction)
+                    # db.session.add(existing_interaction) not needed, technically a patch
                     db.session.commit()
-                    return make_response(existing_interaction.to_dict(), 201)
+                    return make_response(existing_interaction.to_dict(), 200)
                 # this line is working
                 elif existing_interaction.relation_cat == -1:
+                    # if you are the sender of the -1, change it to a 0 and they can see you now
                     return make_response("category -1 already exists between these users")
                 
             # else statement works for creating a new interaction
