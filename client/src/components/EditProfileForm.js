@@ -20,26 +20,22 @@ function EditProfileForm (){
         breed: yup.string().required("Please enter your dog's breed"),
         age: yup.string().required("Please enter you dog's age"),
         weight: yup.string().required("Please enter your dog's weight"),
-        fixed: yup.string().required("Please enter yes if your dog is spayed/neutered, no if not"),
-        profile_pic: yup.string().required("Please enter photo url"),
+        fixed: yup.string().required("Is your dog spayed/neutered? enter Yes or No"),
+        profile_pic: yup.string().required("Please enter a photo url"),
         bio: yup.string().required("update your bio")
     })
 
     const formik = useFormik({
         initialValues: {
-            // first_name: currentUser.first_name,
-            // last_name: currentUser.last_name,
-            // email: currentUser.email,
-            // phone: currentUser.phone,
             username: currentUser.username,
             breed: currentUser.breed,
             age: currentUser.age,
             weight: currentUser.weight,
-            fixed: currentUser.fixed,
+            fixed: "yes or no",
             profile_pic: currentUser.profile_pic,
-            bio: currentUser.bio,
+            bio: "update bio",
         },
-
+// change bio back to currentUser.bio after updating database to avoid null errors from absent bio info
         validationSchema: userSchema,
         onSubmit: (values) => {
             // alert(JSON.stringify(values, null));
@@ -77,55 +73,7 @@ function EditProfileForm (){
             <p>{errors}</p>
             <form onSubmit={formik.handleSubmit}>
 
-            {/* <label htmlFor="first_name">first name:</label>
-                <input
-                    id="first_name"
-                    name="first_name"
-                    type="text"
-                    placeholder="first name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.first_name}
-                />
-                {formik.errors.first_name ? <div>{formik.errors.first_name}</div> : null}
-
-            <label htmlFor="last_name">last name:</label>
-                <input
-                    id="last_name"
-                    name="last_name"
-                    type="text"
-                    placeholder="last name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.last_name}
-                />
-                {formik.errors.last_name ? <div>{formik.errors.last_name}</div> : null}
-
-            <label htmlFor="email">email:</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    placeholder="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                />
-                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-
-            <label htmlFor="phone">phone:</label>
-                <input
-                    id="phone"
-                    name="phone"
-                    type="text"
-                    placeholder="phone number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.phone}
-                />
-                {formik.errors.phone ? <div>{formik.errors.phone}</div> : null} */}
-
-            <label htmlFor="username">Userame:</label>
+            <label htmlFor="username">userame:</label>
                 <input
                     id="username"
                     name="username"
@@ -136,18 +84,6 @@ function EditProfileForm (){
                     value={formik.values.username}
                 />
                 {formik.errors.username ? <div>{formik.errors.username}</div> : null}
-
-            {/* <label htmlFor="password">Password:</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                />
-                {formik.errors.password ? <div>{formik.errors.password}</div> : null} */}
 
             <label htmlFor="breed">Breed:</label>
                 <input

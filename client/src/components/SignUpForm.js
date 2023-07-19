@@ -128,7 +128,7 @@ function SignUpForm ({handleToggleForm}){
                 />
                 {formik.errors.phone ? <div>{formik.errors.phone}</div> : null}
 
-            <label htmlFor="username">Userame:</label>
+            <label htmlFor="username">Username:</label>
                 <input
                     id="username"
                     name="username"
