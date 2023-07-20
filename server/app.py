@@ -200,13 +200,17 @@ class Interactions(Resource):
             if existing_interaction:
                 if existing_interaction.relation_cat == 0:
                     existing_interaction.relation_cat = 1
-                    import ipdb; ipdb.set_trace()
+                    # import ipdb; ipdb.set_trace()
                     # db.session.add(existing_interaction) not needed, technically a patch
                     db.session.commit()
                     return make_response(existing_interaction.to_dict(), 200)
                 # this line is working
                 elif existing_interaction.relation_cat == -1:
                     # if you are the sender of the -1, change it to a 0 and they can see you now
+                    if existing_interaction.sender_id == sender_id:
+                        existing_interaction.relation_cat = 0
+                        db.session.commit()
+                        return make_response(existing_interaction.to_dict(), 200)
                     return make_response("category -1 already exists between these users")
                 
             # else statement works for creating a new interaction
@@ -219,6 +223,27 @@ class Interactions(Resource):
             # import ipdb; ipdb.set_trace()
             return make_response({"error creating or updating interaction": [str(e)]})
         
+    def put (self):
+        try:
+            data = request.get_json()        
+            sender_id = session.get("user_id")
+            receiver_id = data['receiver_id']
+            # import ipdb; ipdb.set_trace()
+            existing_interaction = Interaction.query.filter(receiver_id == Interaction.sender_id, sender_id == Interaction.receiver_id).first()
+            # import ipdb; ipdb.set_trace()
+            if existing_interaction:
+                existing_interaction.relation_cat = -1
+                db.session.commit()
+                return make_response(existing_interaction.to_dict(), 200)
+            else:
+                new_interaction = Interaction(sender_id=sender_id, receiver_id=receiver_id, relation_cat=-1)
+                db.session.add(new_interaction)
+                db.session.commit()
+                return make_response(new_interaction.to_dict(), 201)
+        except Exception as e:
+            # import ipdb; ipdb.set_trace()
+            return make_response({"error creating or updating interaction": [str(e)]})
+                                
 api.add_resource(Interactions, "/interactions")
 
 class Reports(Resource):

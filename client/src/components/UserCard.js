@@ -3,7 +3,7 @@ import { UserContext } from "../context/userContext";
 
 function UserCard({id, username, profile_pic, breed, age, weight, fixed}) {
 
-    const {handleLikeClick} = useContext(UserContext)
+    const {handleLikeClick, handleDislikeClick} = useContext(UserContext)
 
     return (
 
@@ -16,7 +16,7 @@ function UserCard({id, username, profile_pic, breed, age, weight, fixed}) {
                 <h5> add bio</h5>
                 <h5>{fixed} fixed bool to string</h5>
                 <button onClick={()=>handleLikeClick({receiver_id: id})}>like</button>
-                <button>dislike</button>
+                <button onClick={()=>handleDislikeClick({receiver_id: id})}>dislike</button>
         </div>
     )
 
