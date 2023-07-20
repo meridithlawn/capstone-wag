@@ -6,11 +6,16 @@ import {useFormik} from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { UserContext } from '../context/userContext'
+import { ErrorContext } from "../context/errorContext";
 
 function SignUpForm ({handleToggleForm}){
+
     const history = useHistory()
+
     const [errors, setErrors] = useState([])
+
     const {currentUser, handleSignUp} = useContext(UserContext)
+    const { saveErrors } = useContext(ErrorContext)
 
     const userSchema = yup.object({
         first_name: yup.string().required("Please enter first name"),
@@ -45,7 +50,7 @@ function SignUpForm ({handleToggleForm}){
         onSubmit: (values, {resetForm}) => {
             // alert(JSON.stringify(values, null));
             console.log("im in fetch")
-            handleSignUp(values, resetForm, setErrors)
+            handleSignUp(values, resetForm, saveErrors)
             // const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic} = values
             // const fixedToBool = fixed.trim() === "yes" ? true : false
 

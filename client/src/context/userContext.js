@@ -1,6 +1,6 @@
-import { useReducer, useEffect, useState, createContext} from 'react'
+import { useContext, useEffect, useState, createContext} from 'react'
 import { useHistory} from 'react-router-dom'
-import reactRouterDom from 'react-router-dom'
+import { ErrorContext } from './errorContext'
 
 const UserContext = createContext()
 
@@ -9,6 +9,7 @@ const UserProvider = ({children}) => {
 
     const history = useHistory()
     
+    const {saveErrors} = useContext(ErrorContext)
     const [currentUser, setCurrentUser] = useState(false)
     
     const saveUser = (new_user) => {
@@ -47,11 +48,11 @@ const UserProvider = ({children}) => {
                 })
             } else {
                 resp.json()
-                .then((error) => setErrors(error.message))
+                .then((error) => saveErrors(error.message))
                     // or use setErrors state to update error message
             }
         })
-            .catch((error) => console.log(error));
+            .catch((error) => saveErrors(error));
     }
 
     
@@ -69,12 +70,13 @@ const UserProvider = ({children}) => {
                 saveUser(user)  
             })
         } else {
-                alert("Incorrect username or password")
+                saveErrors("Incorrect username or password")
         }
         })
     }
 // IS IT NECESSARY TO ADD CURLY BRACES AROUND CURRENTUSER IN THE LINE BELOW?
-    const handleEditProfile = (values, setErrors) => {
+// did i IMPLEMENT ERROR CONTEXT IN THE FETCH HERE correctly?
+    const handleEditProfile = (values, saveErrors) => {
         // const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic, bio} = values
         const {username, breed, age, weight, fixed, profile_pic, bio} = values    
         const fixedToBool = fixed.trim() === "yes" ? true : false
@@ -95,11 +97,12 @@ const UserProvider = ({children}) => {
                     })
                 } else {
                     resp.json()
-                    .then((error) => setErrors(error.message))
+                    .then((error) => saveErrors(error.message))
                         // or use setErrors state to update error message
                 }
             })
-                .catch((error) => console.log(error));
+                // .catch((error) => console.log(error));
+                .catch((error) => saveErrors(error));
             
     }
     
@@ -132,7 +135,7 @@ const UserProvider = ({children}) => {
             } else {
                 resp.json()
                 .then(errorObj => {
-                    alert(errorObj.error)
+                    saveErrors(errorObj.error)
                 })
             }
         })
@@ -154,7 +157,7 @@ const UserProvider = ({children}) => {
             } else {
                 resp.json()
                 .then(errorObj => {
-                    alert(errorObj.error)
+                    saveErrors(errorObj.error)
                 })
             }
         })
@@ -171,7 +174,7 @@ const UserProvider = ({children}) => {
           }
           
         })
-        .catch(error => console.error(error))
+        .catch(error => saveErrors(error))
     }
 
 
@@ -184,5 +187,3 @@ const UserProvider = ({children}) => {
 }
 
 export {UserContext, UserProvider}
-
-// all CRUD and fetch go here, plus  currentUser

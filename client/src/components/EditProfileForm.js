@@ -4,19 +4,17 @@ import {useFormik} from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { UserContext } from '../context/userContext'
+import { ErrorContext } from "../context/errorContext";
 
 function EditProfileForm (){
     const history = useHistory()
     const [errors, setErrors] = useState([])
     const {currentUser, saveUser, handleEditProfile} = useContext(UserContext)
+    const {saveErrors} = useContext(ErrorContext)
 
     const userSchema = yup.object({
-        // first_name: yup.string().required("Please enter first name"),
-        // last_name: yup.string().required("Please enter last name"),
-        // email: yup.string().required("Please enter email"),
-        // phone: yup.string().required("Please enter 10 digit phone number"),
+
         username: yup.string().required("Please enter a username"),
-        // password: yup.string().required("Please enter a valid password"),
         breed: yup.string().required("Please enter your dog's breed"),
         age: yup.string().required("Please enter you dog's age"),
         weight: yup.string().required("Please enter your dog's weight"),
@@ -40,7 +38,7 @@ function EditProfileForm (){
         onSubmit: (values) => {
             // alert(JSON.stringify(values, null));
             console.log("im in fetch")
-            handleEditProfile(values, setErrors)
+            handleEditProfile(values, saveErrors)
             // const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic, bio} = values
             // const fixedToBool = fixed.trim() === "yes" ? true : false
 
@@ -73,7 +71,7 @@ function EditProfileForm (){
             <p>{errors}</p>
             <form onSubmit={formik.handleSubmit}>
 
-            <label htmlFor="username">userame:</label>
+            <label htmlFor="username">username:</label>
                 <input
                     id="username"
                     name="username"

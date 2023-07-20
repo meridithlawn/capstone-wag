@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 // import {useHistory} from 'react-router-dom'
 import { UserContext } from "../context/userContext";
+// import { ErrorContext } from "../context/errorContext";
 import UserCard from "./UserCard";
 
 
 function UserHome({allUsers}) {
+
   const { handleSignOutClick, currentUser } = useContext(UserContext);
-
-
+//   const { saveErrors} = useContext(ErrorContext)
 
 //   const filteredUserCategoryNegOne = allUsers.filter((user) =>
 //     currentUser.get_neg_interactions.includes(user.id)
