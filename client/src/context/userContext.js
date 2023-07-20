@@ -52,7 +52,7 @@ const UserProvider = ({children}) => {
                     // or use setErrors state to update error message
             }
         })
-            .catch((error) => console.log(error));
+            .catch((error) => saveErrors(error));
     }
 
     
@@ -187,5 +187,3 @@ const UserProvider = ({children}) => {
 }
 
 export {UserContext, UserProvider}
-
-// all CRUD and fetch go here, plus  currentUser

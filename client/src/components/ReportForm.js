@@ -2,13 +2,17 @@ import {useContext, useState} from "react";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import { UserContext } from "../context/userContext";
+import { ErrorContext } from "../context/errorContext";
+
 
 function ReportForm() {
 
-    const [reports, setReports] = useState({})
+
 
     const {currentUser} = useContext(UserContext)
+    const {saveErrors} = useContext(ErrorContext)
 
+    const [reports, setReports] = useState({})
     const userSchema = yup.object({
 
         description: yup.string().required("Please provide details about the incident"),
@@ -43,7 +47,7 @@ function ReportForm() {
                 else {
                     resp.json()
                     .then(errorObj => {
-                        alert(errorObj.error)
+                        saveErrors(errorObj.error)
                     })
                 }
             })

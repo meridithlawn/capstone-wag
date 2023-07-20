@@ -10,7 +10,7 @@ import FoeCollection from "./FoeCollection";
 import FriendCollection from "./FriendCollection";
 import UserProfile from "./UserProfile";
 import ReportForm from "./ReportForm";
-import Error from "./Error";
+import { ErrorContext } from "../context/errorContext";
 
 
 function App() {
@@ -19,9 +19,9 @@ function App() {
 // if you don't want/need to use all of the values, you can destructure to just one ones you need in this component
 const { currentUser } = useContext(UserContext) 
 // -> include whichever values you want to inherit in the curly braces to destructure
+const {saveErrors} = useContext(ErrorContext)
 
 const [showSignInForm, setShowSignInForm] = useState(false)
-const [errors, setErrors] = useState()
 const [allUsers, setAllUsers] = useState([]);
 
 
@@ -39,7 +39,8 @@ useEffect(() => {
     .then((response) => response.json())
     .then((data) => {
       setAllUsers(data);
-    });
+    })
+    // .catch((error) => saveErrors(error))
 }, []);
 
 console.log("all users,", allUsers);
