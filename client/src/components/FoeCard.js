@@ -15,7 +15,6 @@ function FoeCard({username, profile_pic, breed, age, weight, fixed}) {
                 <h5> add bio</h5>
                 <h5>{fixed} fixed bool to string</h5>
                 <button>like</button>
-                {/* <button>dislike</button> */}
         </div>
     )
 }

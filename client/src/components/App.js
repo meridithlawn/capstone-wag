@@ -30,6 +30,7 @@ const handleToggleForm = () => {
 
 const [allUsers, setAllUsers] = useState([]);
 
+// IS THIS AUTHENTICATED CORRECTLY IF I CAN SEE THE CONSOLE LOG FOR THE ALL USERS FETCH WHEN NOT LOGGED IN
 useEffect(() => {
   fetch("/api/v1/users")
     .then((response) => response.json())

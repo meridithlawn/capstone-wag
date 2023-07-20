@@ -8,6 +8,7 @@ function UserHome({allUsers}) {
   const { handleSignOutClick, currentUser } = useContext(UserContext);
 
 
+
 //   const filteredUserCategoryNegOne = allUsers.filter((user) =>
 //     currentUser.get_neg_interactions.includes(user.id)
 //   );
