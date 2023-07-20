@@ -4,16 +4,17 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './components/App'; 
 import { UserProvider } from './context/userContext';
+import { ErrorProvider } from "./context/errorContext";
 // import "./index.css";
 
 ReactDOM.render(
-    // <ErrorProvider>
+    <ErrorProvider>
         <UserProvider>
             <Router>
                 <App />
             </Router>
         </UserProvider>
-    // </ErrorProvider>
+    </ErrorProvider>
     ,document.getElementById('root')
 
 );

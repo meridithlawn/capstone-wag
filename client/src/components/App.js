@@ -10,6 +10,7 @@ import FoeCollection from "./FoeCollection";
 import FriendCollection from "./FriendCollection";
 import UserProfile from "./UserProfile";
 import ReportForm from "./ReportForm";
+import Error from "./Error";
 
 
 function App() {
@@ -20,7 +21,8 @@ const { currentUser } = useContext(UserContext)
 // -> include whichever values you want to inherit in the curly braces to destructure
 
 const [showSignInForm, setShowSignInForm] = useState(false)
-
+const [errors, setErrors] = useState()
+const [allUsers, setAllUsers] = useState([]);
 
 
 const handleToggleForm = () => {
@@ -28,9 +30,10 @@ const handleToggleForm = () => {
 };
 
 
-const [allUsers, setAllUsers] = useState([]);
+
 
 // IS THIS AUTHENTICATED CORRECTLY IF I CAN SEE THE CONSOLE LOG FOR THE ALL USERS FETCH WHEN NOT LOGGED IN
+// user error state here
 useEffect(() => {
   fetch("/api/v1/users")
     .then((response) => response.json())
