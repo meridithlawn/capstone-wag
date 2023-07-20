@@ -12,17 +12,20 @@ function UserProfile () {
         setSeeForm(currentVal => !currentVal)
     }
 
-    const {currentUser, handleSignOutClick, handleEditProfile, saveUser, handleDelete} = useContext(UserContext)
+    const {currentUser, handleDelete} = useContext(UserContext)
 
     return (
         <div>
-            <h1> My profile</h1>
-            <button onClick={handleSignOutClick}>Sign out</button>
-            {/* <button onClick={handleEditProfile}>Edit Profile</button> */}
+            <img src={currentUser.profile_pic} alt="profilePicture"/>
+                <header>{currentUser.username}</header>
+                <h5>{currentUser.age} years old</h5>
+                <h5>{currentUser.breed}</h5>
+                <h5>{currentUser.weight} lbs</h5>
+                <h5>{currentUser.fixed} how to show bool to string</h5>
+                <h5> {currentUser.bio} </h5>
             <button onClick={handleDelete}>Delete Profile</button>
             <button variant='secondary' onClick={toggleForm}>Edit your profile</button>
             {seeForm ? <EditProfileForm /> : null}
-            <button variant='secondary' onClick={()=>history.push("api/v1/home")}>Home</button>
         </div>
     )
 }
