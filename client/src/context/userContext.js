@@ -126,11 +126,32 @@ const UserProvider = ({children}) => {
             if (resp.ok) {
                 resp.json()
                 .then(data => {
-                    debugger;
-                    // saveUser(data)
+                    // debugger;
+                    // saveUser(data)?
+                })
+            } else {
+                resp.json()
+                .then(errorObj => {
+                    alert(errorObj.error)
                 })
             }
-            else {
+        })
+    }
+
+    const handleDislikeClick = (values) => {
+        fetch("/api/v1/interactions", {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values, null,2),
+            }).then(resp => {
+            if (resp.ok) {
+                resp.json()
+                .then(data => {
+
+                })
+            } else {
                 resp.json()
                 .then(errorObj => {
                     alert(errorObj.error)
@@ -156,7 +177,7 @@ const UserProvider = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={{handleSignOutClick, handleLikeClick, handleSignUp, currentUser, saveUser, handleSignInClick, handleEditProfile, handleDelete}}>
+        <UserContext.Provider value={{handleSignOutClick, handleLikeClick, handleDislikeClick, handleSignUp, currentUser, saveUser, handleSignInClick, handleEditProfile, handleDelete}}>
             {children}
         </UserContext.Provider>
     )
