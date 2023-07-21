@@ -10,6 +10,7 @@ import FoeCollection from "./FoeCollection";
 import FriendCollection from "./FriendCollection";
 import UserProfile from "./UserProfile";
 import ReportForm from "./ReportForm";
+import Error from "./Error"
 import { ErrorContext } from "../context/errorContext";
 
 
@@ -19,7 +20,7 @@ function App() {
 // if you don't want/need to use all of the values, you can destructure to just one ones you need in this component
 const { currentUser } = useContext(UserContext) 
 // -> include whichever values you want to inherit in the curly braces to destructure
-const {saveErrors} = useContext(ErrorContext)
+const {saveErrors, errors} = useContext(ErrorContext)
 
 const [showSignInForm, setShowSignInForm] = useState(false)
 const [allUsers, setAllUsers] = useState([]);
@@ -34,14 +35,17 @@ const handleToggleForm = () => {
 
 // IS THIS AUTHENTICATED CORRECTLY IF I CAN SEE THE CONSOLE LOG FOR THE ALL USERS FETCH WHEN NOT LOGGED IN
 // user error state here
+
 useEffect(() => {
+  if (currentUser){
   fetch("/api/v1/users")
     .then((response) => response.json())
     .then((data) => {
       setAllUsers(data);
     })
+  }
     // .catch((error) => saveErrors(error))
-}, []);
+}, [currentUser]);
 
 console.log("all users,", allUsers);
 
@@ -50,6 +54,7 @@ console.log("all users,", allUsers);
 if (!currentUser) {
   return (
     <>
+    {errors && <Error/>}
     <header>
       {!showSignInForm ? <SignInForm handleToggleForm={handleToggleForm}/> : <SignUpForm handleToggleForm={handleToggleForm}/>}
     </header>
@@ -60,6 +65,7 @@ if (!currentUser) {
   return (
     <div>
     <NavBar/>
+    {errors && <Error/>}
       <Switch>
         <Route exact path = '/'>
           <UserHome 

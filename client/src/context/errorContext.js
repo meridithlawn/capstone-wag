@@ -13,7 +13,7 @@ const ErrorProvider = ({children}) => {
 
 
 return (
-    <ErrorContext.Provider value={{saveErrors}} >
+    <ErrorContext.Provider value={{saveErrors, errors}} >
         {children}
     </ErrorContext.Provider>
 )
