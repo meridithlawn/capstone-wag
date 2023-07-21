@@ -239,7 +239,9 @@ class Interactions(Resource):
                 db.session.commit()
                 return make_response(new_interaction.to_dict(), 201)
         except Exception as e:
-            return make_response({"error creating or updating interaction": [str(e)]}, 400)
+            return make_response(
+                {"error creating or updating interaction": [str(e)]}, 400
+            )
 
 
 api.add_resource(Interactions, "/interactions")

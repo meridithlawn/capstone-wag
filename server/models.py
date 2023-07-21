@@ -5,8 +5,6 @@ from config import app, db, api, bcrypt
 # from app import bcrypt
 
 # Models go here!
-
-
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -23,23 +21,23 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    # relationships build similar for reports, excluding the positive and negative
+    # relationships:
     sent_interactions = db.relationship("Interaction", backref="sender", foreign_keys="Interaction.sender_id")
     received_interactions = db.relationship("Interaction", backref="receiver", foreign_keys="Interaction.receiver_id")
-    # users who I reacted to
+    # returns the users who I reacted to
     users_i_reacted_to = db.relationship('User', secondary='interactions',
         primaryjoin=('User.id == interactions.c.sender_id'),
         secondaryjoin=('User.id == interactions.c.receiver_id'),
         viewonly=True)
-    # gives users who reacted to me
+    # returns the users who reacted to me
     users_reacted_to_me= db.relationship('User', secondary='interactions',
         primaryjoin=('User.id == interactions.c.receiver_id'),
         secondaryjoin=('User.id == interactions.c.sender_id'),
         viewonly=True)
-    #  returns all interactions of this user
+    #  returns all of my interactions
     def get_user_interactions(self):
         return self.sent_interactions + self.received_interactions
-    # returns all neg interaction
+    # returns all neg interaction that I sent
     def get_neg_interactions(self):
         dog_house = [intr.receiver_id for intr in self.sent_interactions if intr.relation_cat == -1]
         return dog_house
@@ -47,12 +45,10 @@ class User(db.Model, SerializerMixin):
     def get_users_w_pos_interactions(self):
         friends = []
         for intr in self.get_user_interactions():
-            # should the relation_cat == 0? why is this appending interactions in both ways
             if intr.relation_cat == 1:
                 if intr.sender == self:
                     friends.append(intr.receiver.id)
                 else:
-                # elif intr.receiver == self: elif intr.sender !== self:
                     friends.append(intr.sender.id)
         return friends
     

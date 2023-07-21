@@ -64,7 +64,7 @@ if __name__ == '__main__':
         # user3 = User(username="Morticia", breed= "Border Collie", age = 4, weight = 35, fixed =True, handler_id=3, profile_pic="", bio="I love to bury my toys.")
         # user4 = User(username="Kobe", breed= "Lab", age= 10, weight = 60, fixed= False, handler_id=4, profile_pic="", bio="Love to play fetch")
         # user5 = User(username="Sylvia", breed="Mutt", age= 2, weight=30, fixed= True, handler_id=5, profile_pic="", bio="Dramatic")
-        # user6 = User(username="Shaggy", breed="English Bulldog", age=9, weight= 30, fixed=False, handler_id=6, profile_pic="", bio="Favorite activites: skateboarding")
+        # user6 = User(username="Shaggy", breed="English Bulldog", age=9, weight= 30, fixed=False, handler_id=6, profile_pic="", bio="Favorite activity: skateboarding")
         # user7 = User(username= "Honeybun", breed="Shar Pei", age= 5, weight= 60, fixed=False, handler_id=7, profile_pic="", bio="A friend to all")
         # user8 = User(username= "Stimpy", breed= "French Bulldog", age=1, weight=22, fixed=False, handler_id=8, profile_pic="", bio= "Happy! Happy! Happy! Joy! Joy! Joy!")
         # user9 = User(username= "Hendrix", breed="Doberman Pinscher", age=2, weight= 60, fixed=False, handler_id=9, profile_pic="", bio= "Loves water")
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         # user12 = User(username = "Arnold", breed="German Sheppherd", age = 3, weight= 60, fixed= True, handler_id =12, profile_pic="", bio="Very strong. Socializes with large dogs only")
         # user13 = User(username = "Portia", breed="Pit Bull", age=12, weight=50, fixed=True, handler_id=13, profile_pic="", bio="Very fast and high energy")
         # user14 = User(username= "Dizzy", breed="Yorkshire Terrier", age 17, weight=10, fixed=True, handler_id=14, profile_pic="", bio="Just likes to sniff around and listen to music")
-        # user15 = User(username= "Smash", breed="Mutt", age=2, weight=40, fixed=True, handler_id=15, profile_pic="", bio="Like bull in a china shop, but a friend to all")
+        # user15 = User(username= "Smash", breed="Mutt", age=2, weight=40, fixed=True, handler_id=15, profile_pic="", bio="A bull in a china shop, but a friend to all")
 
         # report1= Report(sender_id = 1, receiver_id= 2, concern = "asdf", description= "asdf")
         # report2= Report(sender_id=2, receiver_id= 1, concern = "asdf2", description= "asdf2")
