@@ -19,7 +19,7 @@ function UserHome({allUsers}) {
 //     currentUser.get_users_w_pos_interactions.includes(user.id)
 //   );
 //   console.log("friends", filteredUserCategoryPosOne);
-
+// FilteredUserCategoryNegOne returns all of the users that I disliked
 
 // .find will have a true false boolean. returns the element if found, otherwise undefined
   const filteredUserCategoryNew = allUsers.filter(
