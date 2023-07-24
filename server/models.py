@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
     fixed = db.Column(db.Boolean, nullable=False)
     profile_pic = db.Column(db.String, nullable=False)
     bio = db.Column(db.String, nullable=False)
-    currently_walking = db.Column(db.Boolean)
+    currently_walking = db.Column(db.Boolean, default=False)
     handler_id=db.Column(db.Integer, db.ForeignKey('handlers.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())

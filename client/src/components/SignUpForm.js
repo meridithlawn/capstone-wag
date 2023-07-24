@@ -242,3 +242,11 @@ function SignUpForm ({handleToggleForm}){
 }
 
 export default SignUpForm
+
+// password nullable false to model
+// add currently walking to model
+// add bio to sign up form
+// need to put user bio in profile edit form interpolate currentuser bio
+// profile pic nullable false to model and password nullable false to User model
+// added validations to models
+// add currently walking status to friend card, add currently walking button and status to user profile
