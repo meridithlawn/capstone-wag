@@ -4,7 +4,6 @@ from sqlalchemy.orm import validates
 import re
 
 from config import app, db, api, bcrypt
-# from app import bcrypt
 
 # Models go here!
 class User(db.Model, SerializerMixin):
@@ -73,7 +72,6 @@ class User(db.Model, SerializerMixin):
     
     handler = db.relationship("Handler", back_populates="users")
 
-
     serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions', 'sent_interactions.receiver_id', 'users_i_reacted_to.id')
     serialize_rules = ('-handler.id', '-received_interactions','-users_i_reacted_to', '-users_reacted_to_me', '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
 
@@ -89,10 +87,9 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
     
-
-    
     def __repr__(self):
         return f"User #{self.id}: {self.username}, {self.breed}"
+    
     
 class Interaction(db.Model, SerializerMixin):
     __tablename__= 'interactions'
@@ -105,10 +102,7 @@ class Interaction(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    # relationships 
-    # below relationships not necessary because of backref instead of backpopulates so commented out
-    # sender= db.relationship("User", back_populates="sent_interactions")
-    # receiver= db.relationship("User", back_populates="received_interactions")
+# relationships not necessary here because used backref instead of backpopulates in User
     
     def __repr__(self):
         return f"Relation #{self.id}: {self.sender_id}, {self.receiver_id}, {self.relation_cat}"
@@ -149,11 +143,11 @@ class Handler(db.Model, SerializerMixin):
     # serialize
     serialize_only=('id', 'first_name', 'last_name', 'email', 'phone', '-users')
 
-
-
     def __repr__(self):
         return f"Handler #{self.id}: {self.first_name}, {self.last_name}"
+    
 
+    # validations
     @validates('username')
     def valid_username(self, key, username):
         if not username or not type(str) or not 2 < len(username) < 20:
