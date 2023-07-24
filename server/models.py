@@ -154,7 +154,12 @@ class Handler(db.Model, SerializerMixin):
     def __repr__(self):
         return f"Handler #{self.id}: {self.first_name}, {self.last_name}"
 
-    # @validates('username')
+    @validates('username')
+    def valid_username(self, key, username):
+        if not username or not type(str) or not 2 < len(username) < 20:
+          raise ValueError('Your user name must be between 2 and 20 characters long')
+        return username
+    
     @validates('password')
     def valid_password(self, key, password):
         regex = re.compile(r'^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)(?=.*?[\!\#\@\$\%\&\/\(\)\=\?\*\-\+\-\_\.\:\;\,\]\[\{\}\^])[A-Za-z0-9\!\#\@\$\%\&\/\(\)\=\?\*\-\+\-\_\.\:\;\,\]\[\{\}\^]{8,60}$')
@@ -167,7 +172,10 @@ class Handler(db.Model, SerializerMixin):
             if not age or not type(int) or not 0 <= age <= 25:
                 raise ValueError('Age must be a number between 0-25')
             return age
-    # @validates('weight')
+    @validates('weight')
+    def validate_weight(self, key, weight):
+        if not weight or not type(int) or not 1 <= weight <=200:
+            raise ValueError('Weight must be a number between 1-200 lbs')
     # @validates('fixed')
     
     @validates('profile_pic')
@@ -196,7 +204,12 @@ class Handler(db.Model, SerializerMixin):
         if Handler.query.filter_by(email= email_address).first():
             raise ValueError('Email already associated with existing account')
         return email_address
-    # @validates('phone')
+    
+    @validates('phone')
+    def valid_phone(self, key, phone):
+        if not phone or not type(str) or not len(phone) == 10:
+            raise ValueError('Please enter your 10 digit USA phone number')
+        return phone
 
     
     
