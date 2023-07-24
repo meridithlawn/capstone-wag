@@ -28,7 +28,8 @@ function SignUpForm ({handleToggleForm}){
         age: yup.string().required("Please enter you dog's age"),
         weight: yup.string().required("Please enter your dog's weight"),
         fixed: yup.string().required("Please enter yes if your dog is spayed/neutered, no if not"),
-        profile_pic: yup.string().required("Please enter photo url")
+        profile_pic: yup.string().required("Please enter photo url"),
+        bio: yup.string().required("Please describe your dog")
     })
 
     const formik = useFormik({
@@ -44,6 +45,7 @@ function SignUpForm ({handleToggleForm}){
             weight: "",
             fixed: "",
             profile_pic: "",
+            bio: "",
         },
 
         validationSchema: userSchema,
@@ -217,6 +219,16 @@ function SignUpForm ({handleToggleForm}){
                 />
                 {formik.errors.profile_pic ? <div>{formik.errors.profile_pic}</div> : null}
 
+            <label htmlFor="bio">bio:</label>
+                <input
+                    id="bio"
+                    name="bio"
+                    type="bio"
+                    placeholder="bio"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.bio}  
+                />
                 <button type="submit">Submit</button>
 
             </form>
