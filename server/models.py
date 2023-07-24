@@ -1,5 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
+import re
 
 from config import app, db, api, bcrypt
 # from app import bcrypt
@@ -71,8 +73,7 @@ class User(db.Model, SerializerMixin):
     
     handler = db.relationship("Handler", back_populates="users")
 
-    # serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions')
-    # serialize_rules = ('-handler.id', '-sent_interactions', '-received_interactions', '-users_i_reacted_to', '-users_reacted_to_me' '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
+
     serialize_only = ('id', 'username', 'breed', 'age', 'weight', 'fixed', 'profile_pic', 'bio', 'handler_id', 'get_users_w_pos_interactions', 'get_neg_interactions', 'sent_interactions.receiver_id', 'users_i_reacted_to.id')
     serialize_rules = ('-handler.id', '-received_interactions','-users_i_reacted_to', '-users_reacted_to_me', '-sent_reports', '-received_reports', '-users_i_reported', '-users-reported-me')
 
@@ -152,6 +153,51 @@ class Handler(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"Handler #{self.id}: {self.first_name}, {self.last_name}"
+
+    # @validates('username')
+    @validates('password')
+    def valid_password(self, key, password):
+        regex = re.compile(r'^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)(?=.*?[\!\#\@\$\%\&\/\(\)\=\?\*\-\+\-\_\.\:\;\,\]\[\{\}\^])[A-Za-z0-9\!\#\@\$\%\&\/\(\)\=\?\*\-\+\-\_\.\:\;\,\]\[\{\}\^]{8,60}$')
+        if re.fullmatch(regex, password):
+            return password        
+        return ValueError("Password must contain a capital letter, a number, and a special character")
+    
+    @validates('age')
+    def validate_length(self, key, age):
+            if not age or not type(int) or not 0 <= age <= 25:
+                raise ValueError('Age must be a number between 0-25')
+            return age
+    # @validates('weight')
+    # @validates('fixed')
+    
+    @validates('profile_pic')
+    def valid_profile_pic(self, key, profile_pic):
+        if not profile_pic or not type(str):
+            raise ValueError("Invalid picture URL")
+        return profile_pic
+    
+    @validates('first_name')
+    def valid_first_name(self, key, name):
+        if not name or not type(str) or not 1 < len(name) <30:
+            raise ValueError('First name must be between 1-30 characters long')
+        return name 
+    
+    @validates('last_name')
+    def valid_last_name(self, key, name):
+        if not name or not type(str) or not 1 < len(name) < 30:
+            raise ValueError('Last name must be between 1-30 characters long')
+        return name
+    
+    @validates('email')
+    def valid_email(self, key, email_address):
+        regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(.[A-Z|a-z]{2,})+')
+        if not re.fullmatch(regex, email_address):
+            raise ValueError("Invalid email address")
+        if Handler.query.filter_by(email= email_address).first():
+            raise ValueError('Email already associated with existing account')
+        return email_address
+    # @validates('phone')
+
     
     
 

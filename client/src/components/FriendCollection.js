@@ -2,15 +2,15 @@ import {useContext} from "react";
 import FriendCard from './FriendCard'
 import { UserContext } from "../context/userContext";
 
-    function FriendCollection ({allUsers}){
+    function FriendCollection ({allUsers, filteredUserCategoryPosOne}){
         
     const { handleSignOutClick, currentUser } = useContext(UserContext);
 
 
 
-    const filteredUserCategoryPosOne = allUsers.filter((user) =>
-    currentUser.get_users_w_pos_interactions.includes(user.id)
-  );
+//     const filteredUserCategoryPosOne = allUsers.filter((user) =>
+//     currentUser.get_users_w_pos_interactions.includes(user.id)
+//   );
   console.log("friends", filteredUserCategoryPosOne);
 
 
