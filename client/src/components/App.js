@@ -49,6 +49,10 @@ useEffect(() => {
 
 console.log("all users,", allUsers);
 
+const filteredUserCategoryPosOne = allUsers.filter((user) =>
+  currentUser.get_users_w_pos_interactions.includes(user.id)
+  );
+
 
 
 if (!currentUser) {
@@ -79,7 +83,7 @@ if (!currentUser) {
         </Route>
         <Route path="/friends">
           <FriendCollection
-            allUsers={allUsers}
+            allUsers={allUsers} filteredUserCategoryPosOne={filteredUserCategoryPosOne}
           />
         </Route>
         <Route path="/my-profile">

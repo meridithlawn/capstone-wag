@@ -4,28 +4,32 @@ import { UserContext } from "../context/userContext";
 // import { ErrorContext } from "../context/errorContext";
 import UserCard from "./UserCard";
 
-
-function UserHome({allUsers}) {
-
+function UserHome({ allUsers }) {
   const { handleSignOutClick, currentUser } = useContext(UserContext);
-//   const { saveErrors} = useContext(ErrorContext)
+  //   const { saveErrors} = useContext(ErrorContext)
 
-//   const filteredUserCategoryNegOne = allUsers.filter((user) =>
-//     currentUser.get_neg_interactions.includes(user.id)
-//   );
-//   console.log("foes", filteredUserCategoryNegOne);
+  //   const filteredUserCategoryNegOne = allUsers.filter((user) =>
+  //     currentUser.get_neg_interactions.includes(user.id)
+  //   );
+  //   console.log("foes", filteredUserCategoryNegOne);
 
-//   const filteredUserCategoryPosOne = allUsers.filter((user) =>
-//     currentUser.get_users_w_pos_interactions.includes(user.id)
-//   );
-//   console.log("friends", filteredUserCategoryPosOne);
-// FilteredUserCategoryNegOne returns all of the users that I disliked
+  //   const filteredUserCategoryPosOne = allUsers.filter((user) =>
+  //     currentUser.get_users_w_pos_interactions.includes(user.id)
+  //   );
 
-// .find will have a true false boolean. returns the element if found, otherwise undefined
-  const filteredUserCategoryNew = allUsers.filter(
-    (user) => !currentUser.sent_interactions.find(interaction => interaction.receiver_id === user.id)).filter((user) => user.id !== currentUser.id)
-    // add filter to all users to remove interaction.relation_cat === -1 and then filteredUserCategoryNew on that list of users 
+  //   console.log("friends", filteredUserCategoryPosOne);
+  // FilteredUserCategoryNegOne returns all of the users that I disliked
 
+  // .find will have a true false boolean. returns the element if found, otherwise undefined
+  const filteredUserCategoryNew = allUsers
+    .filter(
+      (user) =>
+        !currentUser.sent_interactions.find(
+          (interaction) => interaction.receiver_id === user.id
+        )
+    )
+    .filter((user) => user.id !== currentUser.id);
+  // add filter to all users to remove interaction.relation_cat === -1 and then filteredUserCategoryNew on that list of users
 
   const mappedNewUsers = filteredUserCategoryNew.map((user) => (
     <UserCard key={user.id} {...user} />
@@ -38,7 +42,6 @@ function UserHome({allUsers}) {
       <button onClick={handleSignOutClick}>sign out</button>
       <h2>find new friends</h2>
       <div>{mappedNewUsers}</div>
-     
     </>
   );
 
