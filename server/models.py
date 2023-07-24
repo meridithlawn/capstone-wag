@@ -11,13 +11,14 @@ class User(db.Model, SerializerMixin):
 
     id=db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
-    _password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String, nullable=False)
     breed=db.Column(db.String, nullable=False)
     age= db.Column(db.Integer, nullable=False)
     weight= db.Column(db.Integer, nullable=False)
     fixed = db.Column(db.Boolean, nullable=False)
-    profile_pic = db.Column(db.String)
-    bio = db.Column(db.String)
+    profile_pic = db.Column(db.String, nullable=False)
+    bio = db.Column(db.String, nullable=False)
+    currently_walking = db.Column(db.Boolean)
     handler_id=db.Column(db.Integer, db.ForeignKey('handlers.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
@@ -90,7 +91,7 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f"User #{self.id}: {self.username}, {self.breed}"
     
-    
+
 class Interaction(db.Model, SerializerMixin):
     __tablename__= 'interactions'
 
