@@ -1,8 +1,8 @@
-"""models and relationships
+"""password nullable false and currently walking column on user
 
-Revision ID: 573fc0b4f1da
+Revision ID: 2cd240c63655
 Revises: 
-Create Date: 2023-07-07 16:18:20.048346
+Create Date: 2023-07-24 21:25:54.049755
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '573fc0b4f1da'
+revision = '2cd240c63655'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,12 +33,14 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=False),
     sa.Column('breed', sa.String(), nullable=False),
     sa.Column('age', sa.Integer(), nullable=False),
     sa.Column('weight', sa.Integer(), nullable=False),
     sa.Column('fixed', sa.Boolean(), nullable=False),
-    sa.Column('profile_pic', sa.String(), nullable=True),
-    sa.Column('bio', sa.String(), nullable=True),
+    sa.Column('profile_pic', sa.String(), nullable=False),
+    sa.Column('bio', sa.String(), nullable=False),
+    sa.Column('currently_walking', sa.Boolean(), nullable=True),
     sa.Column('handler_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
