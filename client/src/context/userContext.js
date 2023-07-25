@@ -185,10 +185,24 @@ const UserProvider = ({ children }) => {
       })
       .catch((error) => saveErrors(error));
   };
-
+// check syntax here
   const handleCurrentlyWalking = (e) => {
     console.log("Currently Walking")
-  }
+    fetch(`/api/v1/users/${currentUser.id}/walking`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+    .then((res) => {
+      if (res.ok) {
+        res.json().then((errorObj) => {
+          saveErrors(errorObj.error);
+        });
+      }
+    });
+  };
 
   return (
     <UserContext.Provider

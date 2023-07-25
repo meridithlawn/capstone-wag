@@ -42,6 +42,7 @@ function UserHome({ allUsers }) {
       <button onClick={handleSignOutClick}>sign out</button>
       <h2>find new friends</h2>
       <div>{mappedNewUsers}</div>
+      <h2>Currently walking</h2>
     </>
   );
 

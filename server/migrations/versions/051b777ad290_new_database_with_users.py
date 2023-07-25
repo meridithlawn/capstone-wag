@@ -1,8 +1,8 @@
-"""password nullable false and currently walking column on user
+"""new database with users
 
-Revision ID: 2cd240c63655
+Revision ID: 051b777ad290
 Revises: 
-Create Date: 2023-07-24 21:25:54.049755
+Create Date: 2023-07-25 13:21:58.069537
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2cd240c63655'
+revision = '051b777ad290'
 down_revision = None
 branch_labels = None
 depends_on = None
