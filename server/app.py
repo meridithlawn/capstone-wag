@@ -80,6 +80,7 @@ def signup():
             weight=user_data["weight"],
             fixed=user_data["fixed"],
             profile_pic=user_data["profile_pic"],
+            bio=user_data["bio"]
         )
         new_user.handler_id = new_handler.id
         # hashes our password and saves it to _password_hash column

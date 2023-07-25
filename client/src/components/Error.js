@@ -13,21 +13,21 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
 function Error () {
 
-      const { errors, setErrors } = useContext(ErrorContext);
+      const { errors, saveErrors } = useContext(ErrorContext);
       const [open, setOpen] = useState(null);
     
       useEffect(() => {
         if (errors) {
           setOpen(true);
           const timer = setTimeout(() => {
-            setErrors(null);
+            saveErrors(null);
           }, 3000);
     
           return () => {
             clearTimeout(timer);
           };
         }
-      }, [errors, setErrors]);
+      }, [errors, saveErrors]);
     
       const handleClose = (event, reason) => {
         if (reason === "clickaway") {

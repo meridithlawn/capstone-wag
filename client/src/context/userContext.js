@@ -35,6 +35,7 @@ const UserProvider = ({ children }) => {
       weight,
       fixed,
       profile_pic,
+      bio,
     } = values;
     const fixedToBool = fixed.trim() === "yes" ? true : false;
 
@@ -53,6 +54,7 @@ const UserProvider = ({ children }) => {
           weight,
           fixed: fixedToBool,
           profile_pic,
+          bio
         },
       }),
     })
@@ -184,6 +186,10 @@ const UserProvider = ({ children }) => {
       .catch((error) => saveErrors(error));
   };
 
+  const handleCurrentlyWalking = (e) => {
+    console.log("Currently Walking")
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -196,6 +202,7 @@ const UserProvider = ({ children }) => {
         handleSignInClick,
         handleEditProfile,
         handleDelete,
+        handleCurrentlyWalking
       }}
     >
       {children}
