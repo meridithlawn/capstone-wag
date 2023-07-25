@@ -52,36 +52,10 @@ function SignUpForm ({handleToggleForm}){
         onSubmit: (values, {resetForm}) => {
             // alert(JSON.stringify(values, null));
             console.log("im in fetch")
-            handleSignUp(values, resetForm, saveErrors)
-            // const {first_name, last_name, email, phone, username, password, breed, age, weight, fixed, profile_pic} = values
-            // const fixedToBool = fixed.trim() === "yes" ? true : false
-
-            // fetch("/api/v1/signup", {
-            //     method:"POST",
-            //     headers: {
-            //         "Content-Type": "application/json",   
-            //     },
-            //     body: JSON.stringify({handler: {first_name, last_name, email, phone}, user: {username, password, breed, age, weight, fixed: fixedToBool, profile_pic}}),
-            // })
-            // .then((resp) => {
-            //     console.log("RESP", resp)
-            //     if (resp.ok) {
-            //         resp.json()
-            //         .then(data => {
-            //             saveUser(data)
-            //             resetForm({values: ""});
-            //             history.push('/home')
-            //         })
-            //     } else {
-            //         resp.json()
-            //         .then((error) => setErrors(error.message))
-            //             // or use setErrors state to update error message
-            //     }
-            // })
-            //     .catch((error) => console.log(error));
-            
+            handleSignUp(values, resetForm, saveErrors)            
         },
     });
+
     return (
         <div>
             <p>{errors}</p>
@@ -223,7 +197,7 @@ function SignUpForm ({handleToggleForm}){
                 <input
                     id="bio"
                     name="bio"
-                    type="bio"
+                    type="text"
                     placeholder="bio"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

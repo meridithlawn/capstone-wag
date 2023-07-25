@@ -12,7 +12,7 @@ function UserProfile () {
         setSeeForm(currentVal => !currentVal)
     }
 
-    const {currentUser, handleDelete} = useContext(UserContext)
+    const {currentUser, handleDelete, handleCurrentlyWalking} = useContext(UserContext)
 
     return (
         <div>
@@ -23,6 +23,7 @@ function UserProfile () {
                 <h5>{currentUser.weight} lbs</h5>
                 <h5>{currentUser.fixed} how to show bool to string</h5>
                 <h5> {currentUser.bio} </h5>
+            <button onClick={handleCurrentlyWalking}> Currently Walking </button>
             <button onClick={handleDelete}>Delete Profile</button>
             <button variant='secondary' onClick={toggleForm}>Edit your profile</button>
             {seeForm ? <EditProfileForm /> : null}
