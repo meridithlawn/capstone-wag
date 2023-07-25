@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
  import { ChatEngine } from 'react-chat-engine';
 import { UserContext } from '../context/userContext'
+import { ErrorContext } from "../context/errorContext";
 import NavBar from './NavBar'
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm'
@@ -11,7 +12,7 @@ import FriendCollection from "./FriendCollection";
 import UserProfile from "./UserProfile";
 import ReportForm from "./ReportForm";
 import Error from "./Error"
-import { ErrorContext } from "../context/errorContext";
+
 
 
 function App() {

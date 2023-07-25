@@ -168,6 +168,36 @@ class UserById(Resource):
 
 api.add_resource(UserById, "/users/<int:id>")
 
+class UserByIdWalking(Resource):
+    # def patch(self, id):
+    #     if "user_id" not in session:
+    #         return make_response({"error": "Unauthorized"}, 401)
+    #     try:
+    #         user = db.session.get(User, id)
+    #         if user.currently_walking == False:
+    #             user.currently_walking = True
+    #             db.session.commit()
+    #             return make_response("Out walking!")
+    #         if user.currently_walking == True:
+    #             user.currently_walking = False
+    #             db.session.commit()
+    #             return make_response("Not walking")
+    #     except Exception as e:
+    #         return make_response("Unauthroized, you must be logged in", 404)
+    def patch(self, id):
+            if "user_id" not in session:
+                return make_response({"error": "Unauthorized"}, 401)
+            try:
+                user = db.session.get(User, id) # get current user
+                user.currently_walking = False if user.currently_walking else True
+                db.session.commit()
+                # user.currently_walking = prepares to assign a new value to the property
+                # False if user.currently_walking else True python's equivalent to a ternary
+                return make_response(user, 200) #or send back nothing, the status code will suffice to toggle state in frontend
+            except Exception as e: #what raises an exception in the code above?
+                return make_response("Unauthorized, you must be logged in!", 401)
+api.add_resource(UserByIdWalking, "/users/<int:id>/walking")
+
 
 class Interactions(Resource):
     def get(self):
@@ -176,7 +206,7 @@ class Interactions(Resource):
         all_interactions = [i.to_dict() for i in Interaction.query.all()]
         if all_interactions:
             return make_response(all_interactions, 200)
-        return make_response("no interactions found, 404")
+        return make_response("no interactions found", 404)
 
     def post(self):
         if "user_id" not in session:

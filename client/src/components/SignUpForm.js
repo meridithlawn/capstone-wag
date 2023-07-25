@@ -12,10 +12,9 @@ function SignUpForm ({handleToggleForm}){
 
     const history = useHistory()
 
-    const [errors, setErrors] = useState([])
 
     const {currentUser, handleSignUp} = useContext(UserContext)
-    const { saveErrors } = useContext(ErrorContext)
+    const { saveErrors, errors } = useContext(ErrorContext)
 
     const userSchema = yup.object({
         first_name: yup.string().required("Please enter first name"),
