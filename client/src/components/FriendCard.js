@@ -1,6 +1,6 @@
 import React from "react";
 
-function FriendCard({username, profile_pic, breed, age, weight, fixed}) {
+function FriendCard({username, profile_pic, breed, age, weight, fixed, id}) {
 
 
     return (
@@ -8,6 +8,7 @@ function FriendCard({username, profile_pic, breed, age, weight, fixed}) {
         <div>
                 <img src={profile_pic} alt="profilePicture"/>
                 <header>{username}</header>
+                <h5>{id}</h5>
                 <h5>{age} years old</h5>
                 <h5>{breed}</h5>
                 <h5>{weight} lbs</h5>
