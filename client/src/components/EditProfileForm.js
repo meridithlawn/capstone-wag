@@ -8,9 +8,8 @@ import { ErrorContext } from "../context/errorContext";
 
 function EditProfileForm() {
   const history = useHistory();
-  const [errors, setErrors] = useState([]);
   const { currentUser, saveUser, handleEditProfile } = useContext(UserContext);
-  const { saveErrors } = useContext(ErrorContext);
+  const { errors, saveErrors } = useContext(ErrorContext);
 
   const userSchema = yup.object({
     username: yup.string().required("Please enter a username"),
@@ -32,7 +31,7 @@ function EditProfileForm() {
       weight: currentUser.weight,
       fixed: "yes or no",
       profile_pic: currentUser.profile_pic,
-      bio: " add current user bio",
+      bio: currentUser.bio,
     },
     // change bio back to currentUser.bio after updating database to avoid null errors from absent bio info
     validationSchema: userSchema,

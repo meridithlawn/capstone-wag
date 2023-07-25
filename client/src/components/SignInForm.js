@@ -21,27 +21,9 @@ function SignInForm({handleToggleForm}) {
         }),
         onSubmit: values => {
             handleSignInClick(values)
-            // fetch("/api/v1/signin",{
-            //     method:"POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify(values, null, 2),
-            // }).then(resp => {
-            // if (resp.ok) {
-            //     resp.json()
-            //     .then(user => {
-            //         saveUser(user)  
-            //     })
-            // } else {
-            //     resp.json()
-            //     .then(error => {
-            //         alert("Incorrect username or password",error.error)
-            //     })
-            // }
-            // })
         },
     });
+    
     return (
     <>
         <form onSubmit={formik.handleSubmit}>

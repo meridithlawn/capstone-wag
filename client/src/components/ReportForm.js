@@ -15,6 +15,7 @@ function ReportForm() {
     const [reports, setReports] = useState({})
     const userSchema = yup.object({
 
+        receiver_id: yup.string().required("User id of the user in question is required"),
         description: yup.string().required("Please provide details about the incident"),
         
     })

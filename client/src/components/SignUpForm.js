@@ -23,7 +23,7 @@ function SignUpForm ({handleToggleForm}){
         email: yup.string().required("Please enter email"),
         phone: yup.string().required("Please enter 10 digit phone number"),
         username: yup.string().required("Please enter a username"),
-        password: yup.string().required("Please enter a valid password"),
+        password: yup.string().required("Password requires a capital letter, a number, and a special character"),
         breed: yup.string().required("Please enter your dog's breed"),
         age: yup.string().required("Please enter you dog's age"),
         weight: yup.string().required("Please enter your dog's weight"),
