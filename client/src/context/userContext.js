@@ -193,7 +193,7 @@ const UserProvider = ({ children }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(currentUser),
     })
     .then((res) => {
       if (res.ok) {
