@@ -253,15 +253,29 @@ class Interactions(Resource):
             sender_id = session.get("user_id")
             receiver_id = data["receiver_id"]
 
+            # existing_sent_interaction = Interaction.query.filter(
+            #     receiver_id == Interaction.receiver_id,
+            #     sender_id == Interaction.sender_id,
+            # ).first()
+
+            # import ipdb; ipdb.set_trace()
+            # if existing_sent_interaction.relation_cat == -1:
+            #     return make_response({"error" : "Already a foe"})
+            # import ipdb; ipdb.set_trace()
             existing_interaction = Interaction.query.filter(
                 receiver_id == Interaction.sender_id,
                 sender_id == Interaction.receiver_id,
             ).first()
-
+            # import ipdb; ipdb.set_trace()
             if existing_interaction:
-                existing_interaction.relation_cat = -1
-                db.session.commit()
-                return make_response(existing_interaction.to_dict(), 200)
+                if existing_interaction.relation_cat == 0:
+                    # swap sender and receiver to keep track of my rejects
+                    existing_interaction.sender_id = sender_id
+                    existing_interaction.receiver_id = receiver_id
+                    existing_interaction.relation_cat = -1
+                    # import ipdb; ipdb.set_trace()
+                    db.session.commit()
+                    return make_response(existing_interaction.to_dict(), 200)
             else:
                 new_interaction = Interaction(
                     sender_id=sender_id, receiver_id=receiver_id, relation_cat=-1
