@@ -185,17 +185,19 @@ class UserByIdWalking(Resource):
     #     except Exception as e:
     #         return make_response("Unauthroized, you must be logged in", 404)
     def patch(self, id):
-            if "user_id" not in session:
-                return make_response({"error": "Unauthorized"}, 401)
-            try:
-                user = db.session.get(User, id) # get current user
-                user.currently_walking = False if user.currently_walking else True
-                db.session.commit()
-                # user.currently_walking = prepares to assign a new value to the property
-                # False if user.currently_walking else True python's equivalent to a ternary
-                return make_response(user, 200) #or send back nothing, the status code will suffice to toggle state in frontend
-            except Exception as e: #what raises an exception in the code above?
-                return make_response("Unauthorized, you must be logged in!", 401)
+        if "user_id" not in session:
+            return make_response({"error": "Unauthorized"}, 401)
+        try:
+            data = request.get_json()
+            import ipdb; ipdb.set_trace()
+            user = db.session.get(User, id) # get current user
+            user.currently_walking = False if user.currently_walking else True
+            db.session.commit()
+            # user.currently_walking = prepares to assign a new value to the property
+            # False if user.currently_walking else True python's equivalent to a ternary
+            return make_response(user, 200) #or send back nothing, the status code will suffice to toggle state in frontend
+        except Exception as e: #what raises an exception in the code above?
+            return make_response("Unauthorized, you must be logged in!", 401)
 api.add_resource(UserByIdWalking, "/users/<int:id>/walking")
 
 
