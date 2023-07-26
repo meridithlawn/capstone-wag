@@ -1,7 +1,9 @@
-import React from "react";
+import {useContext} from "react";
+import { UserContext } from "../context/userContext";
 
-function FriendCard({username, profile_pic, breed, age, weight, fixed, id}) {
+function FriendCard({username, profile_pic, breed, age, weight, fixed, bio, id}) {
 
+    const {handleDislikeClick} = useContext(UserContext)
 
     return (
 
@@ -10,12 +12,11 @@ function FriendCard({username, profile_pic, breed, age, weight, fixed, id}) {
                 <header>{username}</header>
                 <h5>{id}</h5>
                 <h5>{age} years old</h5>
-                <h5>{breed}</h5>
+                <h5>{breed}</h5>    
                 <h5>{weight} lbs</h5>
-                <h5> add bio</h5>
+                <h5> {bio}</h5>
                 <h5>{fixed} fixed bool to string</h5>
-                {/* <h5>{currentlyWalking}</h5> */}
-                <button>dislike</button>
+                <button onClick={handleDislikeClick}>dislike</button>
         </div>
     )
 

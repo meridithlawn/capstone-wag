@@ -6,15 +6,8 @@ import { UserContext } from "../context/userContext";
         
     const { handleSignOutClick, currentUser } = useContext(UserContext);
 
-
-// located in app.js:
-//     const filteredUserCategoryPosOne = allUsers.filter((user) =>
-//     currentUser.get_users_w_pos_interactions.includes(user.id)
-//   );
-        // console.log("friends", filteredUserCategoryPosOne);
-
-
-    const mappedFriends = filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
+// below statement checks for if filteredUserCategoryPosOne has anything and if it does then it maps it
+    const mappedFriends = filteredUserCategoryPosOne && filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
 
     return (
         <div> 

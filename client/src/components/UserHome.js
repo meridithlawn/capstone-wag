@@ -49,3 +49,8 @@ function UserHome({ filteredCategoryNewNew }) {
   // render list of potential matches, render list of your friends side by side
 }
 export default UserHome;
+
+// implemented since standup:
+// currentuser.friends && currentuser.friends.map, 
+// for currently walking patch db.session.get(User,  session["user_id"]
+// why isn't information refreshing right away? what do I need to update in the .then?
