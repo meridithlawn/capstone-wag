@@ -5,13 +5,14 @@ import { UserContext } from "../context/userContext";
 
 
 
-function FoeCollection({allUsers}) {
+function FoeCollection({filteredUserCategoryNegOne}) {
     const { handleSignOutClick, currentUser } = useContext(UserContext);
 
-    const filteredUserCategoryNegOne = allUsers.filter((user) =>
-    currentUser.get_neg_interactions.includes(user.id)
-  );
-  console.log("foes", filteredUserCategoryNegOne);
+    // located in app.js:
+//     const filteredUserCategoryNegOne = allUsers.filter((user) =>
+//     currentUser.get_neg_interactions.includes(user.id)
+//   );
+//   console.log("foes", filteredUserCategoryNegOne);
 
     const mappedFoes = filteredUserCategoryNegOne.map(user => <FoeCard key={user.id}{...user}/>)
 
