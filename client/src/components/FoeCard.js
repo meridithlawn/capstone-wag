@@ -1,8 +1,10 @@
-import React from "react";
+import {useContext} from "react";
+import { UserContext } from "../context/userContext";
 
 
-function FoeCard({username, profile_pic, breed, age, weight, fixed}) {
+function FoeCard({username, profile_pic, breed, age, weight,bio, fixed}) {
 
+    const {handleLikeClick} = useContext(UserContext)
 
     return (
 
@@ -12,9 +14,9 @@ function FoeCard({username, profile_pic, breed, age, weight, fixed}) {
                 <h5>{age} years old</h5>
                 <h5>{breed}</h5>
                 <h5>{weight} lbs</h5>
-                <h5> add bio</h5>
+                <h5> {bio}</h5>
                 <h5>{fixed} fixed bool to string</h5>
-                <button>like</button>
+                <button onClick={handleLikeClick}>like</button>
         </div>
     )
 }
