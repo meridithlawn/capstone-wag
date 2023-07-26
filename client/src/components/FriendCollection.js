@@ -2,16 +2,16 @@ import {useContext} from "react";
 import FriendCard from './FriendCard'
 import { UserContext } from "../context/userContext";
 
-    function FriendCollection ({allUsers, filteredUserCategoryPosOne}){
+    function FriendCollection ({filteredUserCategoryPosOne}){
         
     const { handleSignOutClick, currentUser } = useContext(UserContext);
 
 
-
+// located in app.js:
 //     const filteredUserCategoryPosOne = allUsers.filter((user) =>
 //     currentUser.get_users_w_pos_interactions.includes(user.id)
 //   );
-  console.log("friends", filteredUserCategoryPosOne);
+        // console.log("friends", filteredUserCategoryPosOne);
 
 
     const mappedFriends = filteredUserCategoryPosOne.map(user => <FriendCard key={user.id} {...user}/>)
