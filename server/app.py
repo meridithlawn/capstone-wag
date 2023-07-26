@@ -176,7 +176,7 @@ class UserByIdWalking(Resource):
         try:
             data = request.get_json()
             # import ipdb; ipdb.set_trace()
-            user = db.session.get(User, id) # get current user
+            user = db.session.get(User, session["user_id"]) # get current user
             user.currently_walking = False if user.currently_walking else True
             import ipdb; ipdb.set_trace()
             db.session.commit()

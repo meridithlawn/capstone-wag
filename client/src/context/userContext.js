@@ -144,8 +144,7 @@ const UserProvider = ({ children }) => {
       console.log("RESP", resp);
       if (resp.ok) {
         resp.json().then((data) => {
-          // debugger;
-          // saveUser(data)?
+          saveUser(data)
         });
       } else {
         resp.json().then((errorObj) => {
@@ -164,7 +163,9 @@ const UserProvider = ({ children }) => {
       body: JSON.stringify(values, null, 2),
     }).then((resp) => {
       if (resp.ok) {
-        resp.json().then((data) => {});
+        resp.json().then((data) => {
+          saveUser(data)
+        });
       } else {
         resp.json().then((errorObj) => {
           saveErrors(errorObj.error);
@@ -197,6 +198,10 @@ const UserProvider = ({ children }) => {
     })
     .then((res) => {
       if (res.ok) {
+        res.json().then((data) => {
+          saveUser(data)
+        });
+      } else {
         res.json().then((errorObj) => {
           saveErrors(errorObj.error);
         });

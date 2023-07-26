@@ -11,6 +11,7 @@ import FoeCollection from "./FoeCollection";
 import FriendCollection from "./FriendCollection";
 import UserProfile from "./UserProfile";
 import ReportForm from "./ReportForm";
+import CurrentlyWalking from "./CurrentlyWalking"
 import Error from "./Error";
 
 function App() {
@@ -48,6 +49,10 @@ function App() {
   const filteredUserCategoryPosOne = allUsers.filter((user) =>
     currentUser.get_users_w_pos_interactions.includes(user.id)
   );
+
+  const currentlyWalkingFriends = filteredUserCategoryPosOne.filter((user) =>
+    user.currently_walking === true)
+    console.log("Currently walking friends", currentlyWalkingFriends)
 
   // filteredUserCategoryNegOne returns all of the users that I disliked
   const filteredUserCategoryNegOne = allUsers.filter((user) =>
@@ -92,6 +97,7 @@ function App() {
       <Switch>
         <Route exact path="/">
           <UserHome filteredCategoryNewNew={filteredCategoryNewNew} />
+          <CurrentlyWalking currentlyWalkingFriends={currentlyWalkingFriends}/>
         </Route>
         <Route path="/foes">
           <FoeCollection
