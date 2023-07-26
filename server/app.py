@@ -169,29 +169,16 @@ class UserById(Resource):
 api.add_resource(UserById, "/users/<int:id>")
 
 class UserByIdWalking(Resource):
-    # def patch(self, id):
-    #     if "user_id" not in session:
-    #         return make_response({"error": "Unauthorized"}, 401)
-    #     try:
-    #         user = db.session.get(User, id)
-    #         if user.currently_walking == False:
-    #             user.currently_walking = True
-    #             db.session.commit()
-    #             return make_response("Out walking!")
-    #         if user.currently_walking == True:
-    #             user.currently_walking = False
-    #             db.session.commit()
-    #             return make_response("Not walking")
-    #     except Exception as e:
-    #         return make_response("Unauthroized, you must be logged in", 404)
+# the code/patch request as it stands reaches the back end and updates database, but doesnt reflect in data. True in database and false in ipdb value
     def patch(self, id):
         if "user_id" not in session:
             return make_response({"error": "Unauthorized"}, 401)
         try:
             data = request.get_json()
-            import ipdb; ipdb.set_trace()
+            # import ipdb; ipdb.set_trace()
             user = db.session.get(User, id) # get current user
             user.currently_walking = False if user.currently_walking else True
+            import ipdb; ipdb.set_trace()
             db.session.commit()
             # user.currently_walking = prepares to assign a new value to the property
             # False if user.currently_walking else True python's equivalent to a ternary
