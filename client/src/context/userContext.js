@@ -146,7 +146,7 @@ const UserProvider = ({ children }) => {
       },
       body: JSON.stringify(values, null, 2),
     }).then((resp) => {
-      console.log("RESP", resp);
+      console.log("LIKECLICK", resp);
       if (resp.ok) {
         resp.json().then((data) => {
           saveUser(data)

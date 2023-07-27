@@ -52,5 +52,3 @@ export default UserHome;
 
 // implemented since standup:
 // currentuser.friends && currentuser.friends.map, 
-// for currently walking patch db.session.get(User,  session["user_id"]
-// why isn't information refreshing right away? what do I need to update in the .then?
