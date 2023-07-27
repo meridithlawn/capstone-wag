@@ -175,16 +175,14 @@ class UserByIdWalking(Resource):
             return make_response({"error": "Unauthorized"}, 401)
         try:
             data = request.get_json()
-            # import ipdb; ipdb.set_trace()
             user = db.session.get(User, session["user_id"]) # get current user
             user.currently_walking = False if user.currently_walking else True
-            import ipdb; ipdb.set_trace()
             db.session.commit()
             # user.currently_walking = prepares to assign a new value to the property
             # False if user.currently_walking else True python's equivalent to a ternary
-            return make_response(user, 200) #or send back nothing, the status code will suffice to toggle state in frontend
+            return make_response(user.to_dict(), 200) #or send back nothing, the status code will suffice to toggle state in frontend
         except Exception as e: #what raises an exception in the code above?
-            return make_response("Unauthorized, you must be logged in!", 401)
+            return make_response({"error" : "Unauthorized, you must be logged in!"}, 401)
 api.add_resource(UserByIdWalking, "/users/<int:id>/walking")
 
 
@@ -241,16 +239,6 @@ class Interactions(Resource):
             data = request.get_json()
             sender_id = session.get("user_id")
             receiver_id = data["receiver_id"]
-
-            # existing_sent_interaction = Interaction.query.filter(
-            #     receiver_id == Interaction.receiver_id,
-            #     sender_id == Interaction.sender_id,
-            # ).first()
-
-            # import ipdb; ipdb.set_trace()
-            # if existing_sent_interaction.relation_cat == -1:
-            #     return make_response({"error" : "Already a foe"})
-            # import ipdb; ipdb.set_trace()
             existing_interaction = Interaction.query.filter(
                 receiver_id == Interaction.sender_id,
                 sender_id == Interaction.receiver_id,
