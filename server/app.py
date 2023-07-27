@@ -146,8 +146,10 @@ class UserById(Resource):
             return make_response({"error": "Unauthorized"}, 401)
         try:
             user = db.session.get(User, id)
+            # import ipdb; ipdb.set_trace()
             db.session.delete(user)
             db.session.commit()
+            session["user_id"] = None
             return make_response(({}), 204)
         except Exception as e:
             return make_response(({"error": "404: User not found"}), 404)
@@ -212,13 +214,13 @@ class Interactions(Resource):
                     existing_interaction.relation_cat = 1
                     # db.session.add(existing_interaction) not needed, technically a patch here
                     db.session.commit()
-                    return make_response(existing_interaction.to_dict(), 200)
+                    return make_response(db.session.get(User, sender_id).to_dict(), 200)
                 elif existing_interaction.relation_cat == -1:
                     # if you are the sender of the -1, change it to a 0 and they can see you now
                     if existing_interaction.sender_id == sender_id:
                         existing_interaction.relation_cat = 0
                         db.session.commit()
-                        return make_response(existing_interaction.to_dict(), 200)
+                        return make_response(db.session.get(User, sender_id).to_dict(), 200)
                     return make_response(
                         "category -1 already exists between these users"
                     )
@@ -228,7 +230,7 @@ class Interactions(Resource):
                 )
                 db.session.add(new_interaction)
                 db.session.commit()
-                return make_response(new_interaction.to_dict(), 201)
+                return make_response(db.session.get(User,sender_id).to_dict(), 201)
         except Exception as e:
             return make_response({"error creating or updating interaction": [str(e)]})
 
@@ -252,14 +254,14 @@ class Interactions(Resource):
                     existing_interaction.relation_cat = -1
                     # import ipdb; ipdb.set_trace()
                     db.session.commit()
-                    return make_response(existing_interaction.to_dict(), 200)
+                    return make_response(db.session.get(User, sender_id).to_dict(), 200)
             else:
                 new_interaction = Interaction(
                     sender_id=sender_id, receiver_id=receiver_id, relation_cat=-1
                 )
                 db.session.add(new_interaction)
                 db.session.commit()
-                return make_response(new_interaction.to_dict(), 201)
+                return make_response(db.session.get(User, sender_id).to_dict(), 201)
         except Exception as e:
             return make_response(
                 {"error creating or updating interaction": [str(e)]}, 400

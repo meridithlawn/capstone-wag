@@ -1,15 +1,17 @@
 import {useContext} from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from '../context/userContext'
+import { useHistory } from "react-router-dom";
 
 
 
 function NavBar() {
 
   const { handleSignOutClick } = useContext(UserContext)
+  const history = useHistory()
   return (
     <>
-      <button onClick={handleSignOutClick}>sign out</button>
+      <button onClick={() => {handleSignOutClick().then(() => history.push('/'))}}>sign out</button>
       <Link to="/"> Home </Link>
       <Link to="/friends"> Friends </Link>
       <Link to="/chat">Chat</Link>

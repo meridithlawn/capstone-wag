@@ -8,13 +8,15 @@ import { ErrorProvider } from "./context/errorContext";
 // import "./index.css";
 
 ReactDOM.render(
+    <Router>
     <ErrorProvider>
         <UserProvider>
-            <Router>
+            {/* <Router> */}
                 <App />
-            </Router>
+            {/* </Router> */}
         </UserProvider>
     </ErrorProvider>
+    </Router>
     ,document.getElementById('root')
 
 );

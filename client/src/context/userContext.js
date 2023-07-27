@@ -69,7 +69,7 @@ const UserProvider = ({ children }) => {
           resp.json().then((data) => {
             saveUser(data);
             resetForm({ values: "" });
-            history.push("/home");
+            history.push("/");
           });
         } else {
           resp.json().then((error) => saveErrors(error.message));
@@ -89,7 +89,7 @@ const UserProvider = ({ children }) => {
       if (resp.ok) {
         resp.json().then((user) => {
           saveUser(user);
-          history.push("/home");
+          history.push("/");
         });
       } else {
         saveErrors("Incorrect username or password");
@@ -133,7 +133,8 @@ const UserProvider = ({ children }) => {
     fetch("/api/v1/signout", { method: "DELETE" }).then((resp) => {
       if (resp.ok) {
         setCurrentUser(null);
-        history.push('/signin')
+        // history.push('/')
+        return resp;
       }
     });
   };
@@ -186,7 +187,7 @@ const UserProvider = ({ children }) => {
       .then((res) => {
         if (res.ok) {
           saveUser(null);
-          history.push('/signin')
+          history.push('/')
         }
       })
       .catch((error) => saveErrors(error));
