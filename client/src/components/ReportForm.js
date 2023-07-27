@@ -10,7 +10,7 @@ function ReportForm() {
 
 
     const {currentUser} = useContext(UserContext)
-    const {saveErrors} = useContext(ErrorContext)
+    const {errors, saveErrors} = useContext(ErrorContext)
 
     const [reports, setReports] = useState({})
     const userSchema = yup.object({
@@ -25,12 +25,9 @@ function ReportForm() {
             receiver_id: "",
             concern: "",
             description: ""
-            // incident_datetime: ""
-            
         },
         validationSchema: userSchema,
         onSubmit: values => {
-            console.log("im in fetch")
             fetch("/api/v1/reports", {
                 method:"POST",
                 headers: {
@@ -38,11 +35,11 @@ function ReportForm() {
                 },
                 body: JSON.stringify(values, null, 2),
             }).then(resp => {
-                console.log("RESP", resp)
                 if (resp.ok) {
                     resp.json()
                     .then(data => {
                         setReports(data)
+                        saveErrors("Your report has been successfully submitted and is awaiting review")
                     })
                 }
                 else {
@@ -97,16 +94,6 @@ function ReportForm() {
                 onBlur={formik.handleBlur}
                 value={formik.values.description} 
             />
-            {/* <label htmlFor="incident_datetime">incident_datetime:</label>
-            <input
-                id="incident_datetime"
-                name="incident_datetime"
-                type="datetime"
-                placeholder="date time"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.incident_datetime} 
-            /> */}
             <button type="submit">Submit</button>
             </form>
             </div>
