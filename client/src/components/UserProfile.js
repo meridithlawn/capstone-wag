@@ -26,7 +26,7 @@ function UserProfile () {
             <button onClick={handleCurrentlyWalking}> Currently Walking </button>
             <button onClick={handleDelete}>Delete Profile</button>
             <button variant='secondary' onClick={toggleForm}>Edit your profile</button>
-            {seeForm ? <EditProfileForm /> : null}
+            {seeForm ? <EditProfileForm toggleForm={toggleForm}/> : null}
         </div>
     )
 }
