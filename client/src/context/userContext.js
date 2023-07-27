@@ -9,10 +9,15 @@ const UserProvider = ({ children }) => {
 
   const { saveErrors } = useContext(ErrorContext);
   const [currentUser, setCurrentUser] = useState(false);
+  // const [showForm, setShowForm] = useState(false)
 
   const saveUser = (new_user) => {
     setCurrentUser(new_user);
   };
+
+  // const handleToggleForm = () => {
+  //   setShowForm((currentVal) => !currentVal)
+  // }
 
   useEffect(() => {
     fetch("/api/v1/check-user").then((response) => {
@@ -116,6 +121,7 @@ const UserProvider = ({ children }) => {
         if (resp.ok) {
           resp.json().then((data) => {
             saveUser(data);
+            // handleToggleForm()
           });
         } else {
           resp.json().then((error) => saveErrors(error.message));
@@ -221,6 +227,7 @@ const UserProvider = ({ children }) => {
         handleSignInClick,
         handleEditProfile,
         handleDelete,
+        // handleToggleForm,
         handleCurrentlyWalking
       }}
     >

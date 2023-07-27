@@ -6,9 +6,9 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { ErrorContext } from "../context/errorContext";
 
-function EditProfileForm() {
+function EditProfileForm({toggleForm}) {
   const history = useHistory();
-  const { currentUser, saveUser, handleEditProfile } = useContext(UserContext);
+  const { currentUser, saveUser, handleEditProfile, handleToggleForm } = useContext(UserContext);
   const { errors, saveErrors } = useContext(ErrorContext);
 
   const userSchema = yup.object({
@@ -37,6 +37,7 @@ function EditProfileForm() {
     validationSchema: userSchema,
     onSubmit: (values) => {
       handleEditProfile(values, saveErrors);
+      toggleForm(false)
     },
   });
   return (
@@ -113,6 +114,9 @@ function EditProfileForm() {
           onBlur={formik.handleBlur}
           value={formik.values.profile_pic}
         />
+        {formik.errors.profile_pic ? <div>{formik.errors.profile_pic}</div> : null}
+
+
         <label htmlFor="bio">Bio:</label>
         <input
           id="bio"
