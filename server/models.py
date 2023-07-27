@@ -24,8 +24,8 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     # relationships:
-    sent_interactions = db.relationship("Interaction", backref="sender", foreign_keys="Interaction.sender_id")
-    received_interactions = db.relationship("Interaction", backref="receiver", foreign_keys="Interaction.receiver_id")
+    sent_interactions = db.relationship("Interaction", backref="sender", foreign_keys="Interaction.sender_id", cascade="all")
+    received_interactions = db.relationship("Interaction", backref="receiver", foreign_keys="Interaction.receiver_id", cascade="all")
     # returns the users who I reacted to
     users_i_reacted_to = db.relationship('User', secondary='interactions',
         primaryjoin=('User.id == interactions.c.sender_id'),
@@ -55,9 +55,9 @@ class User(db.Model, SerializerMixin):
         return friends
     
     # returns the reports I sent
-    sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id")
+    sent_reports = db.relationship("Report", backref="sender", foreign_keys="Report.sender_id", cascade="all")
     # returns the reports I received
-    received_reports = db.relationship("Report", backref="receiver", foreign_keys="Report.receiver_id")
+    received_reports = db.relationship("Report", backref="receiver", foreign_keys="Report.receiver_id", cascade="all")
     # returns the users I reported
     users_i_reported = db.relationship('User', secondary='reports',
         primaryjoin=('User.id == reports.c.sender_id'),

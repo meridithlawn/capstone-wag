@@ -46,28 +46,28 @@ function App() {
   console.log("all users,", allUsers);
 
   // filteredCategoryPosOne returns all of my user friends
-  const filteredUserCategoryPosOne = allUsers.filter((user) =>
+  const filteredUserCategoryPosOne = currentUser && allUsers.filter((user) =>
     currentUser.get_users_w_pos_interactions.includes(user.id)
   );
 
-  const currentlyWalkingFriends = filteredUserCategoryPosOne.filter((user) =>
+  const currentlyWalkingFriends = currentUser && filteredUserCategoryPosOne.filter((user) =>
     user.currently_walking === true)
     console.log("Currently walking friends", currentlyWalkingFriends)
 
   // filteredUserCategoryNegOne returns all of the users that I disliked
-  const filteredUserCategoryNegOne = allUsers.filter((user) =>
+  const filteredUserCategoryNegOne = currentUser && allUsers.filter((user) =>
     currentUser.get_neg_interactions.includes(user.id)
   );
   // console.log("foes", filteredUserCategoryNegOne);
 
-  const filteredCategoryNewNew = allUsers
+  const filteredCategoryNewNew = currentUser && allUsers
     .filter(
-      (user) => !currentUser.get_users_w_pos_interactions.includes(user.id)
+      (user) => currentUser.get_users_w_pos_interactions && !currentUser.get_users_w_pos_interactions.includes(user.id)
     )
-    .filter((user) => !currentUser.get_neg_interactions.includes(user.id))
+    .filter((user) => currentUser.get_neg_interactions && !currentUser.get_neg_interactions.includes(user.id))
     .filter(
       (user) =>
-        !currentUser.sent_interactions.find(
+      currentUser.sent_interactions && !currentUser.sent_interactions.find(
           (interaction) => interaction.receiver_id === user.id
         )
     );
