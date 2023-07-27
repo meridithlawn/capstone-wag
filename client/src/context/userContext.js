@@ -121,7 +121,6 @@ const UserProvider = ({ children }) => {
         if (resp.ok) {
           resp.json().then((data) => {
             saveUser(data);
-            // handleToggleForm()
           });
         } else {
           resp.json().then((error) => saveErrors(error.message));
