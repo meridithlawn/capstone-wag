@@ -27,7 +27,7 @@ const UserProvider = ({ children }) => {
     });
   }, []);
 
-  const handleSignUp = (values, resetForm, setErrors) => {
+  const handleSignUp = (values, resetForm, saveErrors) => {
     const {
       first_name,
       last_name,

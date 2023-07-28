@@ -59,7 +59,7 @@ function SignUpForm ({handleToggleForm}){
     return (
         <div>
             <p>{errors}</p>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} style={{display:'flex',flexDirection:'column',gap:10}}>
 
             {/* <label htmlFor="first_name">first name:</label>
                 <input
@@ -105,9 +105,11 @@ function SignUpForm ({handleToggleForm}){
                 {formik.errors.last_name ? <div>{formik.errors.last_name}</div> : null}
            </FormControl>
 
+<FormControl>
 
-            <label htmlFor="email">email:</label>
-                <input
+            {/* <label htmlFor="email">email:</label> */}
+                <TextField
+                label="email"
                     id="email"
                     name="email"
                     type="text"
@@ -117,6 +119,9 @@ function SignUpForm ({handleToggleForm}){
                     value={formik.values.email}
                 />
                 {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+</FormControl>
+
+
 
             <label htmlFor="phone">phone:</label>
                 <input

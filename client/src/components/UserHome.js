@@ -42,7 +42,7 @@ function UserHome({ filteredCategoryNewNew }) {
   return (
     <Box p={1}>
       <h2>Nice to see you, {currentUser.username}!</h2>
-      <button onClick={handleSignOutClick}>sign out</button>
+      {/* <button onClick={handleSignOutClick}>sign out</button> */}
       {/* <button onClick={showError}>test error</button> */}
       <h2>find new friends</h2>
 

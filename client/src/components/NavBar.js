@@ -16,14 +16,14 @@ function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Wag
           </Typography>
-          <Button
+          {/* <Button
             sx={{ color: "white" }}
             onClick={handleSignOutClick}
           >
             sign out
-          </Button>
+          </Button> */}
           <Button>
             <Link to="/"> Home </Link>
           </Button>
@@ -41,6 +41,12 @@ function NavBar() {
           </Button>
           <Button>
             <Link to="/reports">Report</Link>
+          </Button>
+          <Button
+            sx={{ color: "white" }}
+            onClick={handleSignOutClick}
+          >
+            sign out
           </Button>
         </Toolbar>
       </AppBar>
