@@ -7,7 +7,7 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const history = useHistory();
 
-  const { saveErrors } = useContext(ErrorContext);
+  const { saveErrors, errors } = useContext(ErrorContext);
   const [currentUser, setCurrentUser] = useState(false);
   // const [showForm, setShowForm] = useState(false)
 
@@ -72,7 +72,9 @@ const UserProvider = ({ children }) => {
             history.push("/");
           });
         } else {
-          resp.json().then((error) => saveErrors(error.message));
+          resp.json().then((errorObj) => saveErrors(errorObj.errors[0]));
+          // console.log(errors)
+          // saveErrors("Error in signup")
         }
       })
       .catch((error) => saveErrors(error));
