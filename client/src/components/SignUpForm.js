@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { UserContext } from '../context/userContext'
 import { ErrorContext } from "../context/errorContext";
+import { FormControl, TextField } from "@mui/material";
 
 function SignUpForm ({handleToggleForm}){
 
@@ -60,7 +61,7 @@ function SignUpForm ({handleToggleForm}){
             <p>{errors}</p>
             <form onSubmit={formik.handleSubmit}>
 
-            <label htmlFor="first_name">first name:</label>
+            {/* <label htmlFor="first_name">first name:</label>
                 <input
                     id="first_name"
                     name="first_name"
@@ -70,10 +71,29 @@ function SignUpForm ({handleToggleForm}){
                     onBlur={formik.handleBlur}
                     value={formik.values.first_name}
                 />
-                {formik.errors.first_name ? <div>{formik.errors.first_name}</div> : null}
+                {formik.errors.first_name ? <div>{formik.errors.first_name}</div> : null} */}
+           
+           <FormControl>
 
-            <label htmlFor="last_name">last name:</label>
-                <input
+            {/* <label htmlFor="first_name">first name:</label> */}
+                <TextField
+                label='first name'
+                    id="first_name"
+                    name="first_name"
+                    type="text"
+                    placeholder="first name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.first_name}
+                />
+                {formik.errors.first_name ? <div>{formik.errors.first_name}</div> : null}
+           </FormControl>
+
+           <FormControl>
+
+            {/* <label htmlFor="last_name">last name:</label> */}
+                <TextField
+                    label='last name'
                     id="last_name"
                     name="last_name"
                     type="text"
@@ -83,6 +103,8 @@ function SignUpForm ({handleToggleForm}){
                     value={formik.values.last_name}
                 />
                 {formik.errors.last_name ? <div>{formik.errors.last_name}</div> : null}
+           </FormControl>
+
 
             <label htmlFor="email">email:</label>
                 <input
