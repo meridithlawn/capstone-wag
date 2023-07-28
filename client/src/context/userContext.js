@@ -133,12 +133,12 @@ const UserProvider = ({ children }) => {
     fetch("/api/v1/signout", { method: "DELETE" }).then((resp) => {
       if (resp.ok) {
         setCurrentUser(null);
-        // history.push('/')
+        history.push('/')
         return resp;
       }
     });
   };
-
+// 
   const handleLikeClick = (values) => {
     fetch("/api/v1/interactions", {
       method: "POST",

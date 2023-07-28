@@ -11,8 +11,10 @@ import FoeCollection from "./FoeCollection";
 import FriendCollection from "./FriendCollection";
 import UserProfile from "./UserProfile";
 import ReportForm from "./ReportForm";
-import CurrentlyWalking from "./CurrentlyWalking"
+import CurrentlyWalking from "./CurrentlyWalking";
 import Error from "./Error";
+import "./app.css";
+import { Box } from "@mui/material";
 
 function App() {
   // Code goes here!
@@ -46,47 +48,32 @@ function App() {
   console.log("all users,", allUsers);
 
   // filteredCategoryPosOne returns all of my user friends
-  const filteredUserCategoryPosOne = currentUser && allUsers.filter((user) =>
-    currentUser.get_users_w_pos_interactions.includes(user.id)
-  );
+  const filteredUserCategoryPosOne = currentUser && allUsers.filter((user) => currentUser.get_users_w_pos_interactions.includes(user.id));
 
-  const currentlyWalkingFriends = currentUser && filteredUserCategoryPosOne.filter((user) =>
-    user.currently_walking === true)
-    console.log("Currently walking friends", currentlyWalkingFriends)
+  const currentlyWalkingFriends = currentUser && filteredUserCategoryPosOne.filter((user) => user.currently_walking === true);
+  console.log("Currently walking friends", currentlyWalkingFriends);
 
   // filteredUserCategoryNegOne returns all of the users that I disliked
-  const filteredUserCategoryNegOne = currentUser && allUsers.filter((user) =>
-    currentUser.get_neg_interactions.includes(user.id)
-  );
+  const filteredUserCategoryNegOne = currentUser && allUsers.filter((user) => currentUser.get_neg_interactions.includes(user.id));
   // console.log("foes", filteredUserCategoryNegOne);
 
-  const filteredCategoryNewNew = currentUser && allUsers
-    .filter(
-      (user) => currentUser.get_users_w_pos_interactions && !currentUser.get_users_w_pos_interactions.includes(user.id)
-    )
-    .filter((user) => currentUser.get_neg_interactions && !currentUser.get_neg_interactions.includes(user.id))
-    .filter(
-      (user) =>
-      currentUser.sent_interactions && !currentUser.sent_interactions.find(
-          (interaction) => interaction.receiver_id === user.id
-        )
-    );
+  const filteredCategoryNewNew =
+    currentUser &&
+    allUsers
+      .filter((user) => currentUser.get_users_w_pos_interactions && !currentUser.get_users_w_pos_interactions.includes(user.id))
+      .filter((user) => currentUser.get_neg_interactions && !currentUser.get_neg_interactions.includes(user.id))
+      .filter(
+        (user) => currentUser.sent_interactions && !currentUser.sent_interactions.find((interaction) => interaction.receiver_id === user.id)
+      );
 
   if (!currentUser) {
     return (
       <>
         {errors && <Error />}
         <header>
-          {!showSignInForm ? (
-            <SignInForm handleToggleForm={handleToggleForm} />
-          ) : (
-            <SignUpForm handleToggleForm={handleToggleForm} />
-          )}
+          {!showSignInForm ? <SignInForm handleToggleForm={handleToggleForm} /> : <SignUpForm handleToggleForm={handleToggleForm} />}
         </header>
-        <img
-          src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg"
-          alt="!"
-        />
+        <img src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg" alt="!" />
       </>
     );
   }
@@ -96,18 +83,16 @@ function App() {
       {errors && <Error />}
       <Switch>
         <Route exact path="/">
-          <UserHome filteredCategoryNewNew={filteredCategoryNewNew} />
-          <CurrentlyWalking currentlyWalkingFriends={currentlyWalkingFriends}/>
+          <Box sx={{ display: "grid", gridTemplateColumns: "70% 30%", gap: 5, p: 2 }}>
+            <UserHome filteredCategoryNewNew={filteredCategoryNewNew} />
+            <CurrentlyWalking currentlyWalkingFriends={currentlyWalkingFriends} />
+          </Box>
         </Route>
         <Route path="/foes">
-          <FoeCollection
-            filteredUserCategoryNegOne={filteredUserCategoryNegOne}
-          />
+          <FoeCollection filteredUserCategoryNegOne={filteredUserCategoryNegOne} />
         </Route>
         <Route path="/friends">
-          <FriendCollection
-            filteredUserCategoryPosOne={filteredUserCategoryPosOne}
-          />
+          <FriendCollection filteredUserCategoryPosOne={filteredUserCategoryPosOne} />
         </Route>
         <Route path="/my-profile">
           <UserProfile />
@@ -116,11 +101,7 @@ function App() {
           <ReportForm />
         </Route>
         <Route path="/chat">
-          <ChatEngine
-            projectID="f2276eae-256e-4e25-ae18-9722533ca53c"
-            userName="andresvillarreal"
-            userSecret="andresvillarreal"
-          />
+          <ChatEngine projectID="f2276eae-256e-4e25-ae18-9722533ca53c" userName="andresvillarreal" userSecret="andresvillarreal" />
         </Route>
       </Switch>
     </div>
