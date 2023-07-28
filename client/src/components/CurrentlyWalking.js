@@ -6,7 +6,7 @@ function CurrentlyWalking({ currentlyWalkingFriends }) {
   const mappedWalking = currentlyWalkingFriends && currentlyWalkingFriends.map((user) => <WalkerCard key={user.id} {...user} />);
   return (
     <div>
-      <h1> Currently Walking</h1>
+      <h5> Currently Walking</h5>
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {mappedWalking}
         

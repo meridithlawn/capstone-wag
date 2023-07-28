@@ -18,12 +18,6 @@ function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Wag
           </Typography>
-          {/* <Button
-            sx={{ color: "white" }}
-            onClick={handleSignOutClick}
-          >
-            sign out
-          </Button> */}
           <Button>
             <Link to="/"> Home </Link>
           </Button>
