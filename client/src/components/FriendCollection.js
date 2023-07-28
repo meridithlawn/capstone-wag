@@ -1,6 +1,7 @@
 import {useContext} from "react";
 import FriendCard from './FriendCard'
 import { UserContext } from "../context/userContext";
+import { Box } from "@mui/material";
 
     function FriendCollection ({filteredUserCategoryPosOne}){
         
@@ -11,8 +12,10 @@ import { UserContext } from "../context/userContext";
 
     return (
         <div> 
-            <h1>friends</h1>
+            <h5>Friends</h5>
+            <Box className="grid-container" sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5 }}>
             {mappedFriends}
+            </Box>
         </div>
     )
 }

@@ -2,6 +2,7 @@
 import {useContext} from "react";
 import FoeCard from './FoeCard'
 import { UserContext } from "../context/userContext";
+import { Box } from "@mui/material";
 
 
 
@@ -15,8 +16,10 @@ function FoeCollection({filteredUserCategoryNegOne}) {
 
     return (
         <div>
-            <h1>Foes</h1>
+            <h5>Foes</h5>
+            <Box className="grid-container" sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5 }}>
             {mappedFoes}
+            </Box>
         </div>
     )
 }
