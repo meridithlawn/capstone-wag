@@ -28,8 +28,10 @@ Your Flask backend is ready!
 
 ### React Setup
 
-1. Run `cd ..` to move out of the server directory 
+1. Open a second terminal in the project directory
 2. Run `cd client` to navigate into the client directory
+3. Run `npm install` to install React dependencies
+4. Run `npm start` to open the application in your browser
 
 
 
