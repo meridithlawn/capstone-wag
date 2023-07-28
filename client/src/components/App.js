@@ -70,10 +70,15 @@ function App() {
     return (
       <>
         {errors && <Error />}
-        <header>
-          {!showSignInForm ? <SignInForm handleToggleForm={handleToggleForm} /> : <SignUpForm handleToggleForm={handleToggleForm} />}
-        </header>
-        <img src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg" alt="!" />
+        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <img
+            src="https://barx.flywheelsites.com/wp-content/uploads/2021/08/english-springer-spaniel-pair-scaled-1-1024x768.jpeg"
+            alt="!"
+          />
+          <header>
+            {!showSignInForm ? <SignInForm handleToggleForm={handleToggleForm} /> : <SignUpForm handleToggleForm={handleToggleForm} />}
+          </header>
+        </Box>
       </>
     );
   }
