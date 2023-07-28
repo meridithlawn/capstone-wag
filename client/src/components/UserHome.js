@@ -44,13 +44,12 @@ function UserHome({ filteredCategoryNewNew }) {
       <h2>Nice to see you, {currentUser.username}!</h2>
       {/* <button onClick={handleSignOutClick}>sign out</button> */}
       {/* <button onClick={showError}>test error</button> */}
-      <h2>find new friends</h2>
+      <h5>Find new friends</h5>
 
       {/* grid of 3 columns */}
       <Box className="grid-container" sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5 }}>
         {mappedNewUsers}
       </Box>
-      <h2>Currently walking</h2>
     </Box>
   );
 

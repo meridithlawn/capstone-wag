@@ -57,7 +57,7 @@ function ReportForm() {
       </p>
       <div>
         <form onSubmit={formik.handleSubmit}>
-          <label htmlFor="sender_id">sender_id:</label>
+          <label htmlFor="sender_id">Sender ID</label>
           <input
             id="sender_id"
             name="sender_id"
@@ -67,7 +67,7 @@ function ReportForm() {
             onBlur={formik.handleBlur}
             value={formik.values.sender_id}
           />
-          <label htmlFor="receiver_id">receiver_id:</label>
+          <label htmlFor="receiver_id">Receiver ID</label>
           <input
             id="receiver_id"
             name="receiver_id"
@@ -77,7 +77,7 @@ function ReportForm() {
             onBlur={formik.handleBlur}
             value={formik.values.receiver_id}
           />
-          <label htmlFor="concern">concern:</label>
+          <label htmlFor="concern">Concern</label>
           <input
             id="concern"
             name="concern"
@@ -87,7 +87,7 @@ function ReportForm() {
             onBlur={formik.handleBlur}
             value={formik.values.concern}
           />
-          <label htmlFor="description">description:</label>
+          <label htmlFor="description">Description</label>
           <input
             id="description"
             name="description"
